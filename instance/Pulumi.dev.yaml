@@ -1,2 +1,6 @@
 config:
+  cloudflare:apiToken:
+    secure: AAABAH9gbu7dCPXIz9yTi2PVrognfmfb2fVklMv9QWVdwJL5myIIcShZAz7aqQV+64V068E9WaCokr8KcQas3NIZW+4XJg2J
+  linode:token:
+    secure: AAABAEtU8jOQt0qL12yALp+mQT++iqn59PuU2KtMlGePnvCvkWYM6LBtlbZOsJEM+xP6abFsT1N/reM5x1Pok+OG6a9/SG0z9Atz3lX2vcG/KgYn2rIXXLcsF0g9/QIq
   ut2004:cfZoneId: 81b3e7eec3333246143a5584c67d805c
