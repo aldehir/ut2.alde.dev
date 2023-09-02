@@ -1,7 +1,9 @@
 name: Pulumi Up
 on:
-  - pull_request
   - workflow_dispatch
+  - push:
+      branches:
+        - main
 
 jobs:
   preview:
