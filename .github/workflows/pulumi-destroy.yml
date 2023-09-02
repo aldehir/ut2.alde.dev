@@ -1,10 +1,10 @@
-name: Pulumi Destory
+name: Pulumi Destroy
 on:
   - workflow_dispatch
 
 jobs:
   preview:
-    name: Pulumi Destory
+    name: Pulumi Destroy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
