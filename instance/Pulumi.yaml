@@ -1,0 +1,4 @@
+name: ut2004
+runtime:
+  name: python
+description: UT2004 Servers
