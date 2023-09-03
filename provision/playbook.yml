@@ -3,6 +3,7 @@
   hosts: ut2-servers
 
   tasks:
-    - name: Say hello
+    - name: Say hello, elevated
       ansible.builtin.debug:
-        msg: "Hello"
+        msg: "Hello from elevated permissions"
+      become: true

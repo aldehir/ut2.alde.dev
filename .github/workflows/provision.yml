@@ -21,16 +21,22 @@ jobs:
       - name: Install ansible collections
         run: ansible-galaxy collection install -r provision/requirements.yml
 
-      - name: Create a private key file
+      - name: Create ansible private key and become password files
         env:
           ANSIBLE_PRIVATE_KEY: ${{ secrets.ANSIBLE_PRIVATE_KEY }}
+          ANSIBLE_BECOME_PASSWORD: ${{ secrets.ANSIBLE_BECOME_PASSWORD }}
         run: |
-          keyfile=$(mktemp)
-          cat <<EOF > $keyfile
+          file=$(mktemp)
+          cat <<EOF > $file
           $ANSIBLE_PRIVATE_KEY
           EOF
-          chmod 600 $keyfile
-          echo "ANSIBLE_PRIVATE_KEY_FILE=$keyfile" >> "$GITHUB_ENV"
+          chmod 600 $file
+          echo "ANSIBLE_PRIVATE_KEY_FILE=$file" >> "$GITHUB_ENV"
+
+          file=$(mktemp)
+          echo -n "$ANSIBLE_BECOME_PASSWORD" > $file
+          chmod 600 $file
+          echo "ANSIBLE_BECOME_PASSWORD_FILE=$file" >> "$GITHUB_ENV"
 
       - name: Run Playbook
         env:
