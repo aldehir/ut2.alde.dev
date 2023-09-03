@@ -31,3 +31,4 @@ jobs:
   provision-instances:
     needs: create-instances
     uses: ./.github/workflows/provision.yml
+    secrets: inherit

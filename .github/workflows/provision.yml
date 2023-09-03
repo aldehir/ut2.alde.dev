@@ -22,10 +22,12 @@ jobs:
         run: ansible-galaxy collection install -r provision/requirements.yml
 
       - name: Create a private key file
+        env:
+          ANSIBLE_PRIVATE_KEY: ${{ secrets.ANSIBLE_PRIVATE_KEY }}
         run: |
           keyfile=$(mktemp)
           cat <<EOF > $keyfile
-          ${{ secrets.ANSIBLE_PRIVATE_KEY }}
+          $ANSIBLE_PRIVATE_KEY
           EOF
           chmod 600 $keyfile
           echo "ANSIBLE_PRIVATE_KEY_FILE=$keyfile" >> "$GITHUB_ENV"
