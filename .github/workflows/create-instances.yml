@@ -1,11 +1,13 @@
-name: Pulumi Preview
+name: Create Instances and Provision
 on:
-  - pull_request
-  - workflow_dispatch
+  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
-  preview:
-    name: Preview
+  create-instances:
+    name: Create Instances
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,8 +22,14 @@ jobs:
 
       - uses: pulumi/actions@v3
         with:
-          command: preview
+          command: up
           stack-name: dev
           work-dir: ./instance
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+  provision-instances:
+    name: Provision
+    needs: create-instances
+    uses: ./.github/workflows/provision.yml
+    secrets: inherit
