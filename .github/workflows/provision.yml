@@ -36,4 +36,7 @@ jobs:
         env:
           ANSIBLE_REMOTE_USER: ${{ vars.ANSIBLE_REMOTE_USER }}
           LINODE_TOKEN: ${{ secrets.LINODE_TOKEN }}
-        run: ansible-playbook -i provision/inventory provision/playbook.yml
+        run: >
+          ansible-playbook -i provision/inventory
+            --ssh-extra-args "-o StrictHostKeyChecking=no"
+            provision/playbook.yml
