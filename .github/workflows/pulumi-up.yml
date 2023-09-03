@@ -29,4 +29,5 @@ jobs:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
   provision-instances:
+    needs: create-instances
     uses: ./.github/workflows/provision.yml
