@@ -5,4 +5,4 @@ keyed_groups:
     separator: ''
 compose:
   ansible_ssh_host: ipv4 | first
-  ansible_port: 22
+  ansible_ssh_extra_args: -o StrictHostKeyChecking=no
