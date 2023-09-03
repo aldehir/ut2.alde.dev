@@ -1,0 +1,27 @@
+name: Provision
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  provision:
+    name: Provision
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install ansible collections
+        run: ansible-galaxy collection install -r provision/requirements.yml
+
+      - name: Run Playbook
+        run: ansible-playbook -i provision/inventory provision/playbook.yml
