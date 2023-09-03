@@ -1,6 +1,6 @@
 ---
 - name: Provision UT2004 Servers
-  hosts: ut2-servers
+  hosts: ut2_server
 
   tasks:
     - name: Say hello, elevated

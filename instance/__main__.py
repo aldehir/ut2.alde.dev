@@ -28,7 +28,6 @@ for count, region in [(1, "us-central"), (1, "us-ord")]:
         instance = linode.Instance(
             instance_name,
             label=instance_name,
-            group="ut2-servers",
             type='g6-nanode-1',
             region=region,
             image=base_image_id,
