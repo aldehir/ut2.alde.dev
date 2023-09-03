@@ -31,7 +31,7 @@ jobs:
           echo "ANSIBLE_PRIVATE_KEY_FILE=$keyfile" >> "$GITHUB_ENV"
 
       - name: Run Playbook
-        run: ansible-playbook -i provision/inventory provision/playbook.yml
         env:
-          ANSIBLE_REMOTE_USER: ${{ env.ANSIBLE_REMOTE_USER }}
+          ANSIBLE_REMOTE_USER: ${{ vars.ANSIBLE_REMOTE_USER }}
           LINODE_TOKEN: ${{ secrets.LINODE_TOKEN }}
+        run: ansible-playbook -i provision/inventory provision/playbook.yml
