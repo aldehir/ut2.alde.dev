@@ -32,7 +32,7 @@ for count, region in [(1, "us-central"), (1, "us-ord")]:
             type='g6-nanode-1',
             region=region,
             image=base_image_id,
-            tags=["ut2", "ut2k4", "ut2004", "game-server"],
+            tags=["ut2-server", "game-server"],
         )
 
         record = cloudflare.Record(
