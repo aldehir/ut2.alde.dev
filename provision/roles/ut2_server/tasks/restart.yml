@@ -1,0 +1,24 @@
+---
+# Separate restart task so that it may be called from a handler.
+
+# This may take a while as it pulls down the image, so run async and check on
+# the result later.
+- name: Restart instance
+  ansible.builtin.systemd:
+    name: "{{ ut2_server_instance_name }}.service"
+    daemon_reload: true
+    state: restarted
+    enabled: true
+  become: true
+  async: 900
+  poll: 0
+  register: ut2_server_job
+
+- name: Wait on job
+  ansible.builtin.async_status:
+    jid: "{{ ut2_server_job.ansible_job_id }}"
+  become: true
+  register: ut2_server_job_result
+  until: ut2_server_job_result.finished
+  retries: 100
+  delay: 10

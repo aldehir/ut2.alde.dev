@@ -1,0 +1,3 @@
+---
+- name: Restart instance
+  ansible.builtin.include_tasks: restart.yml

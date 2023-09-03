@@ -1,0 +1,33 @@
+---
+- name: Generate Kubernetes YAML file
+  ansible.builtin.template:
+    src: ut2-instance.yml.j2
+    dest: /etc/containers/systemd/{{ ut2_server_instance_name }}.yml
+    mode: "0644"
+  notify: Restart instance
+  become: true
+
+- name: Generate Quadlet kube
+  ansible.builtin.template:
+    src: ut2-instance.kube.j2
+    dest: /etc/containers/systemd/{{ ut2_server_instance_name }}.kube
+    mode: "0644"
+  notify: Restart instance
+  become: true
+
+- name: Open up server ports
+  ansible.posix.firewalld:
+    port: "{{ item }}"
+    zone: public
+    state: enabled
+    immediate: true
+    permanent: true
+  become: true
+  loop:
+    - "{{ ut2_server_game_port }}/udp"
+    - "{{ ut2_server_query_port }}/udp"
+    - "{{ ut2_server_gamespy_port }}/udp"
+    - "{{ ut2_server_web_admin_port }}/tcp"
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
