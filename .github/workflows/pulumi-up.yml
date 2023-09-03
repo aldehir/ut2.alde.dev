@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  preview:
+  create-instances:
     name: Pulumi Up
     runs-on: ubuntu-latest
     steps:
@@ -27,3 +27,6 @@ jobs:
           work-dir: ./instance
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+  provision-instances:
+    uses: ./.github/workflows/provision.yml
