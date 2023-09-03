@@ -1,0 +1,8 @@
+---
+- name: Provision UT2004 Servers
+  hosts: ut2-servers
+
+  tasks:
+    - name: Say hello
+      ansible.builtin.debug:
+        msg: "Hello"
