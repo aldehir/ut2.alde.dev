@@ -32,3 +32,6 @@ jobs:
 
       - name: Run Playbook
         run: ansible-playbook -i provision/inventory provision/playbook.yml
+        env:
+          ANSIBLE_REMOTE_USER: ${{ env.ANSIBLE_REMOTE_USER }}
+          LINODE_TOKEN: ${{ secrets.LINODE_TOKEN }}
