@@ -1,8 +1,44 @@
 ---
 - name: Provision UT2004 Servers
   hosts: ut2_server
+  vars:
+    ut2004_server_image: ghcr.io/aldehir/ut2004-server:3369.3-release-1
 
   tasks:
+    - name: Pull down server container
+      containers.podman.podman_image:
+        name: "{{ ut2004_server_image }}"
+
+    - name: Create server pod for instance 1
+      ansible.builtin.include_tasks: tasks/create-ut2-pod.yml
+      vars:
+        server_id: "01"
+        server_image: "{{ ut2004_server_image }}"
+        server_game_port: 7777
+        server_query_port: 7778
+        server_gamespy_query_port: 7787
+        server_web_admin_port: 8000
+
+    - name: Create server pod for instance 2
+      ansible.builtin.include_tasks: tasks/create-ut2-pod.yml
+      vars:
+        server_id: "02"
+        server_image: "{{ ut2004_server_image }}"
+        server_game_port: 7797
+        server_query_port: 7798
+        server_gamespy_query_port: 7807
+        server_web_admin_port: 8001
+
+    - name: Create server pod for instance 3
+      ansible.builtin.include_tasks: tasks/create-ut2-pod.yml
+      vars:
+        server_id: "03"
+        server_image: "{{ ut2004_server_image }}"
+        server_game_port: 7817
+        server_query_port: 7818
+        server_gamespy_query_port: 7827
+        server_web_admin_port: 8002
+
     - name: Say hello, elevated
       ansible.builtin.debug:
         msg: "Hello from elevated permissions"
