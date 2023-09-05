@@ -1,16 +1,16 @@
-name: Create Instances
+name: Pulumi Up
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'instance/**'
+  workflow_call:
+    inputs:
+      environment:
+        type: string
 
-concurrency: staging_environment
+concurrency: deploy-${{ inputs.environment }}
 
 jobs:
   create-instances:
-    name: Create Instances
+    name: Pulumi Up
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,15 +26,7 @@ jobs:
       - uses: pulumi/actions@v3
         with:
           command: up
-          stack-name: dev
+          stack-name: ${{ vars.PULUMI_STACK }}
           work-dir: ./instance
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-
-  deploy-to-staging:
-    name: Deploy to Staging
-    uses: ./.github/workflows/provision.yml
-    with:
-      environment: staging
-      stack: dev
-    secrets: inherit

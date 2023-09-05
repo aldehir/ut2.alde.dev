@@ -1,21 +1,11 @@
 name: Provision
 on:
   workflow_call:
-    inputs:
-      stack:
-        required: true
-        type: string
-      environment:
-        type: string
 
 jobs:
   provision:
     name: Provision
     runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
-    concurrency:
-      group: ${{ inputs.environment }}_environment
-      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v2
 

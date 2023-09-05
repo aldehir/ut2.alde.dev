@@ -1,0 +1,19 @@
+name: On Push
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+
+jobs:
+  deploy-staging:
+    name: Deploy Staging
+    uses: ./.github/workflows/deploy.yml
+    environment: staging
+    secrets: inherit
+
+  deploy-production:
+    name: Deploy Production
+    uses: ./.github/workflows/deploy.yml
+    environment: production
+    secrets: inherit

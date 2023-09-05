@@ -1,23 +1,15 @@
 name: Deploy
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
+  workflow_call:
 
 jobs:
-  deploy-to-staging:
-    name: Deploy to Staging
-    uses: ./.github/workflows/provision.yml
-    with:
-      environment: staging
-      stack: dev
+  create-instances:
+    name: Create Instances
+    uses: ./.github/workflows/pulumi-up.yml
     secrets: inherit
 
-  deploy-to-production:
-    name: Deploy to Production
-    needs: deploy-to-staging
+  provision:
+    name: Provision
     uses: ./.github/workflows/provision.yml
-    with:
-      environment: production
-      stack: production
     secrets: inherit
