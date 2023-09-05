@@ -14,7 +14,7 @@ filtered_images = linode.get_images(filters=[
 base_image_id = filtered_images.images[0].id
 
 region_map = {
-    "us-central": "dal",
+    "us-central": "dfw",
     "us-ord": "chi",
 }
 
@@ -22,12 +22,12 @@ instances = []
 
 for count, region in [(1, "us-central"), (1, "us-ord")]:
     for i in range(1, count+1):
-        instance_id = f"{region_map[region]}-{i:02d}"
-        instance_name = f"ut2-{instance_id}"
+        instance_name = f"ut2-{i:02d}-{region_map[region]}"
+        dns_record = f"ut2-{i:02d}.{region_map[region]}{dns_suffix}"
 
         instance = linode.Instance(
             instance_name,
-            label=instance_name,
+            label=instance_id,
             type='g6-nanode-1',
             region=region,
             image=base_image_id,
@@ -37,7 +37,7 @@ for count, region in [(1, "us-central"), (1, "us-ord")]:
         record = cloudflare.Record(
             instance_name,
             zone_id=zone_id,
-            name=f"{instance_id}.ut2{dns_suffix}",
+            name=dns_record,
             value=instance.ip_address,
             type="A",
             ttl=3600,
