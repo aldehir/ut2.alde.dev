@@ -4,4 +4,4 @@ config:
   linode:token:
     secure: AAABAEtU8jOQt0qL12yALp+mQT++iqn59PuU2KtMlGePnvCvkWYM6LBtlbZOsJEM+xP6abFsT1N/reM5x1Pok+OG6a9/SG0z9Atz3lX2vcG/KgYn2rIXXLcsF0g9/QIq
   ut2004:cfZoneId: 65fe1c8d2b0b2b4ba65cbf0194fa57be
-  ut2004:dnsSuffix: .staging
+  ut2004:dnsSuffix: staging.kokuei.dev

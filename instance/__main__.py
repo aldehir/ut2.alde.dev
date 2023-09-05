@@ -4,7 +4,7 @@ import pulumi_cloudflare as cloudflare
 
 config = pulumi.Config()
 zone_id = config.require("cfZoneId")
-dns_suffix = config.get("dnsSuffix", "")
+dns_suffix = config.get("dnsSuffix", "kokuei.dev")
 
 filtered_images = linode.get_images(filters=[
     linode.GetImagesFilterArgs(name="label", values=["rocky8"]),
@@ -22,12 +22,11 @@ instances = []
 
 for count, region in [(1, "us-central"), (1, "us-ord")]:
     for i in range(1, count+1):
-        instance_name = f"ut2-{i:02d}-{region_map[region]}"
-        dns_record = f"ut2-{i:02d}.{region_map[region]}{dns_suffix}"
+        fqdn = f"ut2-{i:02d}.{region_map[region]}.{dns_suffix}"
 
         instance = linode.Instance(
-            instance_name,
-            label=instance_id,
+            fqdn,
+            label=fqdn,
             type='g6-nanode-1',
             region=region,
             image=base_image_id,
@@ -35,9 +34,9 @@ for count, region in [(1, "us-central"), (1, "us-ord")]:
         )
 
         record = cloudflare.Record(
-            instance_name,
+            fqdn,
             zone_id=zone_id,
-            name=dns_record,
+            name=fqdn,
             value=instance.ip_address,
             type="A",
             ttl=3600,
