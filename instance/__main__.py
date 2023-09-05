@@ -2,56 +2,22 @@ import pulumi
 import pulumi_linode as linode
 import pulumi_cloudflare as cloudflare
 
-config = pulumi.Config()
-zone_id = config.require("cfZoneId")
-dns_suffix = config.get("dnsSuffix", "kokuei.dev")
+from helpers import get_base_image, create_server, generate_export
 
-filtered_images = linode.get_images(filters=[
-    linode.GetImagesFilterArgs(name="label", values=["rocky8"]),
-    linode.GetImagesFilterArgs(name="is_public", values=["false"]),
-])
+stack = pulumi.get_stack()
 
-base_image_id = filtered_images.images[0].id
+image = get_base_image("rocky8")
 
-region_map = {
-    "us-central": "dfw",
-    "us-ord": "chi",
-}
+servers = []
 
-instances = []
+if stack == "production":
+    servers += [
+        create_server(image.id, 1, "us-ord", "g6-dedicated-2")
+    ]
 
-for count, region in [(1, "us-central"), (1, "us-ord")]:
-    for i in range(1, count+1):
-        fqdn = f"ut2-{i:02d}.{region_map[region]}.{dns_suffix}"
+elif stack == "dev":
+    servers += [
+        create_server(image.id, 1, "us-ord")
+    ]
 
-        instance = linode.Instance(
-            fqdn,
-            label=fqdn,
-            type='g6-nanode-1',
-            region=region,
-            image=base_image_id,
-            tags=["ut2-server", "game-server"],
-        )
-
-        record = cloudflare.Record(
-            fqdn,
-            zone_id=zone_id,
-            name=fqdn,
-            value=instance.ip_address,
-            type="A",
-            ttl=3600,
-            proxied=False,
-        )
-
-        instances.append({
-            "label": instance.label,
-            "region": instance.region,
-            "type": instance.type,
-            "record": {
-                "type": record.type,
-                "name": record.name,
-                "value": record.value,
-            },
-        })
-
-pulumi.export('instances', instances)
+pulumi.export("servers", [generate_export(x) for x in servers])
