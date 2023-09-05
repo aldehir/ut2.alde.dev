@@ -1,0 +1,13 @@
+name: Deploy
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-to-staging:
+    name: Deploy to staging
+    uses: ./.github/workflows/provision.yml
+    with:
+      stack: dev
+    secrets: inherit
