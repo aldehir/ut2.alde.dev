@@ -40,7 +40,7 @@ jobs:
           file: ./containers/tam-utcomp/Containerfile
           tags: |
             ${{ env.IMAGE_TAG }}:${{ github.sha }}
-            ${{ env.IMAGE_TAG }}:${{ github.ref_name }}${{ fromJSON('{"dev": "-dev", "production": ""}')[env.PULUMI_STACK] }}
+            ${{ env.IMAGE_TAG }}:${{ github.ref_name }}${{ fromJSON('{"dev": "-dev", "production": ""}')[vars.PULUMI_STACK] }}
           cache-from: |
             ${{ env.IMAGE_TAG }}:cache
           cache-to: |
