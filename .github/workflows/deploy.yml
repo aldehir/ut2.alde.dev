@@ -15,6 +15,7 @@ jobs:
 
   deploy-to-production:
     name: Deploy to Production
+    needs: deploy-to-staging
     uses: ./.github/workflows/provision.yml
     with:
       environment: production
