@@ -4,6 +4,8 @@ on:
     inputs:
       environment:
         type: environment
+  push:
+    branches: [main]
 
 jobs:
   create-instances:
