@@ -7,9 +7,10 @@
       ansible.builtin.include_role:
         name: ut2_server
       vars:
-        ut2_server_id: "{{ server_item + 1 }}"
-        ut2_server_game_port: "{{ 7777 + (20 * server_item) }}"
-        ut2_server_web_admin_port: "{{ 8000 + server_item }}"
-      loop: "{{ range(0, server_instance_count) | list }}"
+        ut2_server_image: "{{ inst.image | default(server_instance_default_image) }}"
+        ut2_server_id: "{{ inst.id }}"
+        ut2_server_game_port: "{{ inst.port }}"
+        ut2_server_web_admin_port: "{{ inst.admin_port }}"
+      loop: "{{ server_instances }}"
       loop_control:
-        loop_var: server_item
+        loop_var: inst
