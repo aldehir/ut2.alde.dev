@@ -1,21 +1,61 @@
 name: Deploy
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
+    inputs:
+      environment:
+        type: environment
 
 jobs:
-  deploy-staging:
-    name: Deploy [Staging]
-    uses: ./.github/workflows/deploy-env.yml
-    with:
-      environment: staging
-    secrets: inherit
+  create-instances:
+    name: Deploy
+    runs-on: ubuntu-latest
+    concurrency: deploy-${{ vars.PULUMI_STACK }}
+    steps:
+      - uses: actions/checkout@v2
 
-  deploy-production:
-    name: Deploy [Staging]
-    needs: [deploy-staging]
-    uses: ./.github/workflows/deploy-env.yml
-    with:
-      environment: production
-    secrets: inherit
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - uses: pulumi/actions@v3
+        with:
+          command: up
+          stack-name: ${{ vars.PULUMI_STACK }}
+          work-dir: ./instance
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+      - name: Install ansible collections
+        run: ansible-galaxy collection install -r provision/requirements.yml
+
+      - name: Create ansible private key and become password files
+        env:
+          ANSIBLE_PRIVATE_KEY: ${{ secrets.ANSIBLE_PRIVATE_KEY }}
+          ANSIBLE_BECOME_PASSWORD: ${{ secrets.ANSIBLE_BECOME_PASSWORD }}
+        run: |
+          file=$(mktemp)
+          cat <<EOF > $file
+          $ANSIBLE_PRIVATE_KEY
+          EOF
+          chmod 600 $file
+          echo "ANSIBLE_PRIVATE_KEY_FILE=$file" >> "$GITHUB_ENV"
+
+          file=$(mktemp)
+          echo -n "$ANSIBLE_BECOME_PASSWORD" > $file
+          chmod 600 $file
+          echo "ANSIBLE_BECOME_PASSWORD_FILE=$file" >> "$GITHUB_ENV"
+
+      - name: Run Playbook
+        env:
+          LIMIT: ${{ vars.PULUMI_STACK }}
+          ANSIBLE_REMOTE_USER: ${{ vars.ANSIBLE_REMOTE_USER }}
+          LINODE_TOKEN: ${{ secrets.LINODE_TOKEN }}
+        run: |
+          ansible-playbook -i provision/inventory \
+            --ssh-extra-args "-o StrictHostKeyChecking=no" \
+            --limit ut2_server_$LIMIT \
+            provision/playbook.yml
