@@ -1,8 +1,6 @@
 ---
 - name: Provision UT2004 Servers
   hosts: ut2_server
-  vars_files:
-    - config.yml
 
   tasks:
     - name: Pull down server container
