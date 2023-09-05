@@ -45,8 +45,3 @@
         ut2_server_id: 3
         ut2_server_game_port: 7817
         ut2_server_web_admin_port: 8002
-
-    - name: Say hello, elevated
-      ansible.builtin.debug:
-        msg: "Hello from elevated permissions"
-      become: true
