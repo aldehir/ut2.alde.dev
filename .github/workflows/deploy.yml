@@ -6,8 +6,16 @@ on:
 
 jobs:
   deploy-to-staging:
-    name: Deploy to staging
+    name: Deploy to Staging
     uses: ./.github/workflows/provision.yml
     with:
       stack: dev
+    secrets: inherit
+
+  deploy-to-production:
+    name: Deploy to Production
+    uses: ./.github/workflows/provision.yml
+    environment: production
+    with:
+      stack: production
     secrets: inherit
