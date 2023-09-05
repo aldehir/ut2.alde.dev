@@ -28,6 +28,7 @@ jobs:
           command: up
           stack-name: ${{ vars.PULUMI_STACK }}
           work-dir: ./instance
+          color: always
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
