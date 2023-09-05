@@ -20,16 +20,17 @@ jobs:
       environment: staging
     secrets: inherit
 
-  create-instances-staging:
+  create-instances-production:
     name: Create Instances [Production]
+    needs: [create-instances-staging]
     uses: ./.github/workflows/pulumi-up.yml
     with:
       environment: production
     secrets: inherit
 
-  provision-staging:
+  provision-production:
     name: Provision [Production]
-    needs: [create-instances-staging]
+    needs: [create-instances-production]
     uses: ./.github/workflows/provision.yml
     with:
       environment: production
