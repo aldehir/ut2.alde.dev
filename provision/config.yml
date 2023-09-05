@@ -1,2 +1,2 @@
 ---
-ut2_server_image: ghcr.io/aldehir/ut2/tam-utcomp:main
+ut2_server_image: "{{ lookup('ansible.builtin.file', 'image') }}"
