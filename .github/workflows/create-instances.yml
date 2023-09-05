@@ -1,9 +1,8 @@
-name: Create Instances and Provision
+name: Create Instances
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: [main]
 
 concurrency: staging_environment
 
@@ -29,9 +28,3 @@ jobs:
           work-dir: ./instance
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-
-  provision-instances:
-    name: Provision
-    needs: create-instances
-    uses: ./.github/workflows/provision.yml
-    secrets: inherit
