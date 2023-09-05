@@ -5,9 +5,6 @@ on:
       environment:
         type: string
 
-env:
-  ENVIRONMENT: ${{ inputs.environment || "staging" }}
-
 jobs:
   provision:
     name: Provision
