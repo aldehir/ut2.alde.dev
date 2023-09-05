@@ -1,22 +1,36 @@
 name: Deploy
 on:
   workflow_dispatch:
-  workflow_call:
-    inputs:
-      environment:
-        type: string
+  push:
+    branches: [main]
 
 jobs:
-  create-instances:
-    name: Create Instances
+  create-instances-staging:
+    name: Create Instances [Staging]
     uses: ./.github/workflows/pulumi-up.yml
     with:
-      environment: ${{ inputs.environment }}
+      environment: staging
     secrets: inherit
 
-  provision:
-    name: Provision
+  provision-staging:
+    name: Provision [Staging]
+    needs: [create-instances-staging]
     uses: ./.github/workflows/provision.yml
     with:
-      environment: ${{ inputs.environment }}
+      environment: staging
+    secrets: inherit
+
+  create-instances-staging:
+    name: Create Instances [Production]
+    uses: ./.github/workflows/pulumi-up.yml
+    with:
+      environment: production
+    secrets: inherit
+
+  provision-staging:
+    name: Provision [Production]
+    needs: [create-instances-staging]
+    uses: ./.github/workflows/provision.yml
+    with:
+      environment: production
     secrets: inherit
