@@ -1,4 +1,2 @@
 ---
-server_instances:
-  - 1
-  - 2
+server_instance_count: 2
