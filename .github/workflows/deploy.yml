@@ -58,7 +58,7 @@ jobs:
           ANSIBLE_FORCE_COLOR: "1"
           LINODE_TOKEN: ${{ secrets.LINODE_TOKEN }}
         run: |
-          ansible-playbook -i provision/inventory \
+          ansible-playbook -i deploy/provision/inventory \
             --ssh-extra-args "-o StrictHostKeyChecking=no" \
             --limit ut2_server_$LIMIT \
             deploy/provision/playbook.yml
