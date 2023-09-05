@@ -55,6 +55,7 @@ jobs:
         env:
           LIMIT: ${{ vars.PULUMI_STACK }}
           ANSIBLE_REMOTE_USER: ${{ vars.ANSIBLE_REMOTE_USER }}
+          ANSIBLE_FORCE_COLOR: "1"
           LINODE_TOKEN: ${{ secrets.LINODE_TOKEN }}
         run: |
           ansible-playbook -i provision/inventory \
