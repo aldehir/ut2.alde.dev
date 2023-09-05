@@ -30,3 +30,11 @@ jobs:
           work-dir: ./instance
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+  deploy-to-staging:
+    name: Deploy to Staging
+    uses: ./.github/workflows/provision.yml
+    with:
+      environment: staging
+      stack: dev
+    secrets: inherit
