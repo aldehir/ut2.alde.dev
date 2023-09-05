@@ -16,7 +16,7 @@ jobs:
   provision:
     name: Provision
     runs-on: ubuntu-latest
-    if: ${{ contains(['push', 'workflow_dispatch'], github.event_name) || github.event.workflow_run.conclusion == 'success' }}
+    if: contains(fromJSON('["push", "workflow_dispatch"]'), github.event_name) || github.event.workflow_run.conclusion == 'success'
     steps:
       - uses: actions/checkout@v2
 
