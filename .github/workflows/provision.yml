@@ -5,11 +5,14 @@ on:
       stack:
         required: true
         type: string
+      environment:
+        type: string
 
 jobs:
   provision:
     name: Provision
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - uses: actions/checkout@v2
 

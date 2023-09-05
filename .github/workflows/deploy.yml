@@ -9,13 +9,14 @@ jobs:
     name: Deploy to Staging
     uses: ./.github/workflows/provision.yml
     with:
+      environment: staging
       stack: dev
     secrets: inherit
 
   deploy-to-production:
     name: Deploy to Production
     uses: ./.github/workflows/provision.yml
-    environment: production
     with:
+      environment: production
       stack: production
     secrets: inherit
