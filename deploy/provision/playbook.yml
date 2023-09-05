@@ -3,23 +3,6 @@
   hosts: ut2_server
 
   tasks:
-    - name: Pull down server container
-      containers.podman.podman_image:
-        name: "{{ ut2_server_image }}"
-      become: true
-      async: 900
-      poll: 0
-      register: pull_containers
-
-    - name: Wait for pull
-      ansible.builtin.async_status:
-        jid: "{{ pull_containers.ansible_job_id }}"
-      become: true
-      register: pull_containers_result
-      until: pull_containers_result.finished
-      retries: 90
-      delay: 10
-
     - name: Create instance
       ansible.builtin.include_role:
         name: ut2_server

@@ -1,4 +1,23 @@
 ---
+- name: Pull down server container
+  containers.podman.podman_image:
+    name: "{{ ut2_server_image }}"
+    pull: true
+  become: true
+  async: 900
+  poll: 0
+  register: ut2_server_pull_containers
+
+- name: Wait for pull
+  ansible.builtin.async_status:
+    jid: "{{ ut2_server_pull_containers.ansible_job_id }}"
+  notify: Restart instance
+  become: true
+  register: ut2_server_pull_containers_result
+  until: ut2_server_pull_containers_result.finished
+  retries: 90
+  delay: 10
+
 - name: Generate Kubernetes YAML file
   ansible.builtin.template:
     src: ut2-instance.yml.j2
