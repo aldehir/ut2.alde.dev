@@ -6,15 +6,12 @@ on:
       environment:
         type: string
 
-env:
-  ENVIRONMENT: ${{ inputs.environment || "staging" }}
-
 jobs:
   create-instances:
     name: Pulumi Up
     runs-on: ubuntu-latest
-    environment: ${{ env.ENVIRONMENT }}
-    concurrency: ${{ env.ENVIRONMENT }}
+    environment: ${{ inputs.environment }}
+    concurrency: ${{ inputs.environment }}
     steps:
       - uses: actions/checkout@v2
 
