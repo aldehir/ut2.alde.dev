@@ -5,33 +5,17 @@ on:
     branches: [main]
 
 jobs:
-  create-instances-staging:
-    name: Create Instances [Staging]
-    uses: ./.github/workflows/pulumi-up.yml
+  deploy-staging:
+    name: Deploy [Staging]
+    uses: ./.github/workflows/deploy-env.yml
     with:
       environment: staging
     secrets: inherit
 
-  provision-staging:
-    name: Provision [Staging]
-    needs: [create-instances-staging]
-    uses: ./.github/workflows/provision.yml
-    with:
-      environment: staging
-    secrets: inherit
-
-  create-instances-production:
-    name: Create Instances [Production]
-    needs: [create-instances-staging]
-    uses: ./.github/workflows/pulumi-up.yml
-    with:
-      environment: production
-    secrets: inherit
-
-  provision-production:
-    name: Provision [Production]
-    needs: [create-instances-production]
-    uses: ./.github/workflows/provision.yml
+  deploy-production:
+    name: Deploy [Staging]
+    needs: [deploy-staging]
+    uses: ./.github/workflows/deploy-env.yml
     with:
       environment: production
     secrets: inherit
