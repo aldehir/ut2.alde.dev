@@ -5,6 +5,8 @@ on:
     branches:
       - main
 
+concurrency: staging_environment
+
 jobs:
   create-instances:
     name: Create Instances
