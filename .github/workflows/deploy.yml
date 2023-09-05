@@ -21,20 +21,20 @@ jobs:
           cache: pip
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r deploy/requirements.txt
 
       - uses: pulumi/actions@v4
         with:
           command: up
           stack-name: ${{ vars.PULUMI_STACK }}
-          work-dir: ./instance
+          work-dir: ./deploy
           color: always
           comment-on-summary: true
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 
       - name: Install ansible collections
-        run: ansible-galaxy collection install -r provision/requirements.yml
+        run: ansible-galaxy collection install -r deploy/provision/requirements.yml
 
       - name: Create ansible private key and become password files
         env:
@@ -63,4 +63,4 @@ jobs:
           ansible-playbook -i provision/inventory \
             --ssh-extra-args "-o StrictHostKeyChecking=no" \
             --limit ut2_server_$LIMIT \
-            provision/playbook.yml
+            deploy/provision/playbook.yml
