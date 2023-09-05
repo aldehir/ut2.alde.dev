@@ -1,2 +1,2 @@
 ---
-ut2_server_image: ghcr.io/aldehir/ut2004-server:3369.3-release-1
+ut2_server_image: ghcr.io/aldehir/ut2/tam-utcomp:main
