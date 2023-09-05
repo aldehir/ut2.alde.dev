@@ -5,6 +5,10 @@ on:
     workflows: ["Create Instances"]
     types: [completed]
     branches: [main]
+  push:
+    branches: [main]
+    paths:
+      - 'provision/**'
 
 concurrency: staging_environment
 
