@@ -1,11 +1,19 @@
 name: Provision
 on:
   workflow_call:
+    inputs:
+      environment:
+        type: string
+
+env:
+  ENVIRONMENT: ${{ inputs.environment || "staging" }}
 
 jobs:
   provision:
     name: Provision
     runs-on: ubuntu-latest
+    environment: ${{ env.ENVIRONMENT }}
+    concurrency: ${{ env.ENVIRONMENT }}
     steps:
       - uses: actions/checkout@v2
 

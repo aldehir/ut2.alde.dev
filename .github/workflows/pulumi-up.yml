@@ -6,12 +6,15 @@ on:
       environment:
         type: string
 
-concurrency: deploy-${{ inputs.environment }}
+env:
+  ENVIRONMENT: ${{ inputs.environment || "staging" }}
 
 jobs:
   create-instances:
     name: Pulumi Up
     runs-on: ubuntu-latest
+    environment: ${{ env.ENVIRONMENT }}
+    concurrency: ${{ env.ENVIRONMENT }}
     steps:
       - uses: actions/checkout@v2
 

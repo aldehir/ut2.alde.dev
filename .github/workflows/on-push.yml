@@ -4,16 +4,17 @@ on:
   push:
     branches: [main]
 
-
 jobs:
   deploy-staging:
     name: Deploy Staging
     uses: ./.github/workflows/deploy.yml
-    environment: staging
+    with:
+      environment: staging
     secrets: inherit
 
   deploy-production:
     name: Deploy Production
     uses: ./.github/workflows/deploy.yml
-    environment: production
+    with:
+      environment: production
     secrets: inherit

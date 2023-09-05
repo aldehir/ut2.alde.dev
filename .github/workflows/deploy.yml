@@ -2,14 +2,21 @@ name: Deploy
 on:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      environment:
+        type: string
 
 jobs:
   create-instances:
     name: Create Instances
     uses: ./.github/workflows/pulumi-up.yml
+    with:
+      environment: ${{ inputs.environment }}
     secrets: inherit
 
   provision:
     name: Provision
     uses: ./.github/workflows/provision.yml
+    with:
+      environment: ${{ inputs.environment }}
     secrets: inherit
