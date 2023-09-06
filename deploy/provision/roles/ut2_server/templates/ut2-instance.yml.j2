@@ -18,7 +18,7 @@ spec:
       image: "{{ ut2_server_image }}"
       envFrom:
         - configMapRef:
-          name: {{ ut2_server_instance_name }}-config
+            name: {{ ut2_server_instance_name }}-config
       volumeMounts:
         - mountPath: /opt/ut2004/Shared
           name: shared
