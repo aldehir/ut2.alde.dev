@@ -1,0 +1,8 @@
+[XAdmin.xAdminConfigIni]
+{% if ut2_server_admins is not none -%}
+{% for user in ut2_server_admins -%}
+AdminUsers=(AdminName="{{ user.name }}",Password="{{ user.password }}",Groups=("Admin"),ManagedGroups=)
+{% endfor -%}
+{% endif -%}
+AdminGroups=(GroupName="Admin",Privileges=,GameSecLevel=255)
+AdminGroups=(GroupName="MatchSetup",Privileges="Xm",GameSecLevel=240)
