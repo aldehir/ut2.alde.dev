@@ -24,7 +24,7 @@ voting:
 
     - id: tam-4v4-tourney
       extends: tam-4v4
-      name: 4v4 TAM Tournament Rules
+      name: TAM 4v4 Tournament Rules
       options:
         LightningAmmo: 14
 
