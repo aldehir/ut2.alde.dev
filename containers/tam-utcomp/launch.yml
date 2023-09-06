@@ -30,7 +30,7 @@ voting:
 
     - id: tam-2v2
       name: TAM 2v2
-      extends: 4v4-tam
+      extends: tam-4v4
       options:
         MaxPlayers: 4
 
