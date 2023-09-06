@@ -38,6 +38,7 @@ jobs:
         env:
           ANSIBLE_PRIVATE_KEY: ${{ secrets.ANSIBLE_PRIVATE_KEY }}
           ANSIBLE_BECOME_PASSWORD: ${{ secrets.ANSIBLE_BECOME_PASSWORD }}
+          ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
         run: |
           file=$(mktemp)
           cat <<EOF > $file
@@ -51,6 +52,11 @@ jobs:
           chmod 600 $file
           echo "ANSIBLE_BECOME_PASSWORD_FILE=$file" >> "$GITHUB_ENV"
 
+          file=$(mktemp)
+          echo -n "$ANSIBLE_VAULT_PASSWORD" > $file
+          chmod 600 $file
+          echo "ANSIBLE_VAULT_PASSWORD_FILE=$file" >> "$GITHUB_ENV"
+
       - name: Run Playbook
         env:
           LIMIT: ${{ vars.PULUMI_STACK }}
@@ -61,4 +67,5 @@ jobs:
           ansible-playbook -i deploy/provision/inventory \
             --ssh-extra-args "-o StrictHostKeyChecking=no" \
             --limit ut2_server_$LIMIT \
+            -e @deploy/provision/acls.yml \
             deploy/provision/playbook.yml
