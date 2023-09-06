@@ -6,8 +6,8 @@ motd: '{{env "UT2_SERVER_MOTD"}}'
 
 voting:
   configs:
-    - id: 4v4-tam
-      name: 4v4 TAM 3SPN Comp. PUGS
+    - id: tam-4v4
+      name: TAM 4v4
       game: 3SPNvUFC.TeamArenaMaster
       prefix: DM
       mutators:
@@ -22,27 +22,27 @@ voting:
         ClassicSniperAmmo: 0
         Tickrate: 100
 
-    - id: 4v4-tourney
-      extends: 4v4-tam
-      name: 4v4 TAM 3SPN Comp. TOURNEY
+    - id: tam-4v4-tourney
+      extends: tam-4v4
+      name: 4v4 TAM Tournament Rules
       options:
         LightningAmmo: 14
 
-    - id: 2v2-tam
-      name: 2v2 TAM 3SPN Comp. PUGS
+    - id: tam-2v2
+      name: TAM 2v2
       extends: 4v4-tam
       options:
         MaxPlayers: 4
 
-    - id: 5v5-tam
-      name: 5v5 TAM 3SPN Comp. PUGS
-      extends: 4v4-tam
+    - id: tam-5v5
+      name: TAM 5v5
+      extends: tam-4v4
       options:
         MaxPlayers: 10
 
     - id: utcomp-1v1-netcode
       game: XGame.xDeathMatch
-      name: 1v1 Casual +Netcode
+      name: UTComp 1v1 +Netcode
       prefix: DM
       mutators:
         - iTSFake.iTSFake
@@ -62,14 +62,14 @@ voting:
         Tickrate: 110
 
     - id: utcomp-1v1-cup-netcode
-      name: 1v1 World Cup +Netcode
+      name: UTComp 1v1 Cup Rules +Netcode
       extends: utcomp-1v1-netcode
       options:
         TimeLimit: 15
         Tickrate: 60
 
     - id: utcomp-2v2-netcode
-      name: 2v2 TDM +Netcode
+      name: UTComp 2v2 +Netcode
       prefix: TDM
       mutators:
         - iTSFake.iTSFake
@@ -88,7 +88,7 @@ voting:
         Tickrate: 60
 
     - id: utcomp-4v4-netcode
-      name: 4v4 TDM +Netcode
+      name: UTComp 4v4 +Netcode
       extends: utcomp-2v2-netcode
       options:
         MaxPlayers: 8
