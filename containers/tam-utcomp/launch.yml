@@ -20,6 +20,7 @@ voting:
         MaxPlayers: 8
         LightningAmmo: 12
         ClassicSniperAmmo: 0
+        Tickrate: 100
 
     - id: 4v4-tourney
       extends: 4v4-tam
@@ -38,3 +39,56 @@ voting:
       extends: 4v4-tam
       options:
         MaxPlayers: 10
+
+    - id: utcomp-1v1-netcode
+      game: XGame.xDeathMatch
+      name: 1v1 Casual +Netcode
+      prefix: DM
+      mutators:
+        - iTSFake.iTSFake
+        - WeaponReplacementv2.MutReplace
+        - UTClassic.MutUseLightning
+        - XGame.MutNoAdrenaline
+        - NoDoubleDamage.MutNoDoubleDamage
+        - XWeapons.MutNoSuperWeapon
+        - UTCompv18c.MutUTComp
+        - Tickrate.Tickrate
+      options:
+        MaxPlayers: 2
+        MinPlayers: 2
+        GoalScore: 0
+        TimeLimit: 10
+        WeaponStay: False
+        Tickrate: 110
+
+    - id: utcomp-1v1-cup-netcode
+      name: 1v1 World Cup +Netcode
+      extends: utcomp-1v1-netcode
+      options:
+        TimeLimit: 15
+        Tickrate: 60
+
+    - id: utcomp-2v2-netcode
+      name: 2v2 TDM +Netcode
+      prefix: TDM
+      mutators:
+        - iTSFake.iTSFake
+        - WeaponReplacementv2.MutReplace
+        - UTClassic.MutUseLightning
+        - XWeapons.MutNoSuperWeapon
+        - UTCompv18c.MutUTComp
+        - Tickrate.Tickrate
+      options:
+        MaxPlayers: 4
+        MinPlayers: 2
+        GoalScore: 0
+        TimeLimit: 20
+        WeaponStay: False
+        FriendlyFire: 1.0
+        Tickrate: 60
+
+    - id: utcomp-4v4-netcode
+      name: 4v4 TDM +Netcode
+      extends: utcomp-2v2-netcode
+      options:
+        MaxPlayers: 8
