@@ -2,7 +2,7 @@
 FROM docker.io/library/golang:1.21
 COPY launcher /src
 WORKDIR /src
-RUN CGO_ENABLE=0 go build -o /bin/launcher .
+RUN CGO_ENABLE=0 go build -o /usr/bin/launcher .
 
 # UT2004 container
 FROM ghcr.io/aldehir/ut2/base:3369.3-release-2
@@ -18,7 +18,7 @@ ENV UT2_SERVER_NAME="UT2004 Server" \
     UT2_SERVER_ADMIN="" \
     UT2_SERVER_MOTD=""
 
-COPY --from=0 /launcher /usr/bin/launcher
+COPY --from=0 /usr/bin/launcher /usr/bin/launcher
 COPY launch.yml launch.yml
 
 COPY --chmod=755 install-packages.sh Community/
