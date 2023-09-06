@@ -7,6 +7,9 @@ spec:
   containers:
     - name: server
       image: "{{ ut2_server_image }}"
+      volumeMounts:
+        - mountPath: /opt/ut2004/Shared
+          name: shared
       ports:
         - containerPort: 7777
           protocol: UDP
@@ -15,4 +18,9 @@ spec:
         - containerPort: 7787
           protocol: UDP
         - containerPort: 80
+  volumes:
+    - name: shared
+      hostPath:
+        path: /var/lib/ut2004
+        type: Directory
   restartPolicy: OnFailure
