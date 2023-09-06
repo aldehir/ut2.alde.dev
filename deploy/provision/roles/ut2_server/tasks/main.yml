@@ -2,6 +2,7 @@
 - name: Pull down server container
   containers.podman.podman_image:
     name: "{{ ut2_server_image }}"
+    force: true
     pull: true
   become: true
   async: 900
