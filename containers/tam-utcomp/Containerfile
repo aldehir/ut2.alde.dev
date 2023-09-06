@@ -32,7 +32,7 @@ RUN curl -sfL -o /usr/bin/ut2u https://github.com/aldehir/ut2u/releases/download
     mkdir Shared && \
     touch Shared/XAdmin.ini && \
     rm -f System/XAdmin.ini && \
-    ln -sf Shared/XAdmin.ini System/XAdmin.ini &&
+    ln -sf Shared/XAdmin.ini System/XAdmin.ini && \
     (cd Community && ./install-packages.sh) && \
     ut2u package check-deps System/UT2004.ini && \
     echo "Package dependency check passed!"
