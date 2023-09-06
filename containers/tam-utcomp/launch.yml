@@ -1,0 +1,40 @@
+
+---
+name: '{{env "UT2_SERVER_NAME" "UT2004 Server"}}'
+admin: '{{env "UT2_SERVER_ADMIN"}}'
+motd: '{{env "UT2_SERVER_MOTD"}}'
+
+voting:
+  configs:
+    - id: 4v4-tam
+      name: 4v4 TAM 3SPN Comp. PUGS
+      game: 3SPNvUFC.TeamArenaMaster
+      prefix: DM
+      mutators:
+        - iTSFake.iTSFake
+        - WtfToolsV1.WtfTools
+        - ScreenSenderFinal.MutScreenSender
+        - XGame.MutNoAdrenaline
+        - ClanManager1h_7T.MutClanManager
+      options:
+        MaxPlayers: 8
+        LightningAmmo: 12
+        ClassicSniperAmmo: 0
+
+    - id: 4v4-tourney
+      extends: 4v4-tam
+      name: 4v4 TAM 3SPN Comp. TOURNEY
+      options:
+        LightningAmmo: 14
+
+    - id: 2v2-tam
+      name: 2v2 TAM 3SPN Comp. PUGS
+      extends: 4v4-tam
+      options:
+        MaxPlayers: 4
+
+    - id: 5v5-tam
+      name: 5v5 TAM 3SPN Comp. PUGS
+      extends: 4v4-tam
+      options:
+        MaxPlayers: 10
