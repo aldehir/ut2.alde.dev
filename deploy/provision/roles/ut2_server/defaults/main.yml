@@ -4,3 +4,4 @@ ut2_server_image: ghcr.io/aldehir/ut2004-server:3369
 ut2_server_game_port: 7777
 ut2_server_web_admin_port: 8000
 ut2_server_network:
+ut2_server_admins:

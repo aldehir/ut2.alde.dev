@@ -6,6 +6,7 @@ Yaml={{ ut2_server_instance_name }}.yml
 {% if ut2_server_network is not none %}
 Network={{ ut2_server_network }}
 {% endif %}
+Volume=/var/lib/ut2004:/opt/ut2004/Shared:z
 PublishPort={{ ut2_server_game_port }}:7777/udp
 PublishPort={{ ut2_server_query_port }}:7778/udp
 PublishPort={{ ut2_server_gamespy_port }}:7787/udp
