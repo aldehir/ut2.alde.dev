@@ -4,9 +4,6 @@ on:
     inputs:
       environment:
         type: string
-      ut2-default-image:
-        type: string
-        required: true
 
 jobs:
   create-instances:
@@ -60,10 +57,8 @@ jobs:
           ANSIBLE_REMOTE_USER: ${{ vars.ANSIBLE_REMOTE_USER }}
           ANSIBLE_FORCE_COLOR: "1"
           LINODE_TOKEN: ${{ secrets.LINODE_TOKEN }}
-          UT2_DEFAULT_IMAGE: ${{ inputs.ut2-default-image }}
         run: |
           ansible-playbook -i deploy/provision/inventory \
             --ssh-extra-args "-o StrictHostKeyChecking=no" \
             --limit ut2_server_$LIMIT \
-            -e server_instance_default_image=$UT2_DEFAULT_IMAGE
             deploy/provision/playbook.yml
