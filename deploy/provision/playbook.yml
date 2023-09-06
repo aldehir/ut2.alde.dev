@@ -11,6 +11,8 @@
         ut2_server_id: "{{ inst.id }}"
         ut2_server_game_port: "{{ inst.port }}"
         ut2_server_web_admin_port: "{{ inst.admin_port }}"
+        ut2_server_info_name: "{{ inst.info.name }}"
+        ut2_server_info_admin: "{{ inst.info.admin }}"
       loop: "{{ server_instances }}"
       loop_control:
         loop_var: inst

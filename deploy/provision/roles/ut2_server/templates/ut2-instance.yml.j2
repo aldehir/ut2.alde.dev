@@ -1,5 +1,14 @@
 ---
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ ut2_server_instance_name }}-config
+data:
+  UT2_SERVER_NAME: {{ ut2_server_info_name }}
+  UT2_SERVER_ADMIN: {{ ut2_server_info_admin }}
+  UT2_SERVER_MOTD: {{ ut2_server_info_motd }}
+---
+apiVersion: v1
 kind: Pod
 metadata:
   name: "{{ ut2_server_instance_name }}"
@@ -7,6 +16,9 @@ spec:
   containers:
     - name: server
       image: "{{ ut2_server_image }}"
+      envFrom:
+        - configMapRef:
+          name: {{ ut2_server_instance_name }}-config
       volumeMounts:
         - mountPath: /opt/ut2004/Shared
           name: shared
