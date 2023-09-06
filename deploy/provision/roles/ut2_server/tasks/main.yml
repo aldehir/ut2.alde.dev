@@ -12,7 +12,6 @@
 - name: Wait for pull
   ansible.builtin.async_status:
     jid: "{{ ut2_server_pull_containers.ansible_job_id }}"
-  notify: Restart instance
   become: true
   register: ut2_server_pull_containers_result
   until: ut2_server_pull_containers_result.finished
@@ -24,7 +23,7 @@
     src: ut2-instance.yml.j2
     dest: /etc/containers/systemd/{{ ut2_server_instance_name }}.yml
     mode: "0644"
-  notify: Restart instance
+  register: ut2_generate_kubernetes_yaml_result
   become: true
 
 - name: Generate Quadlet kube
@@ -32,8 +31,15 @@
     src: ut2-instance.kube.j2
     dest: /etc/containers/systemd/{{ ut2_server_instance_name }}.kube
     mode: "0644"
-  notify: Restart instance
+  register: ut2_generate_quadlet_result
   become: true
+
+- name: Set restart fact
+  ansible.builtin.set_fact:
+    ut2_server_restart: >
+      ut2_server_pull_containers_result.changed or
+      ut2_generate_quadlet_result.changed or
+      ut2_generate_kubernetes_yaml_result.changed
 
 - name: Open up server ports
   ansible.posix.firewalld:
@@ -49,5 +55,6 @@
     - "{{ ut2_server_gamespy_port }}/udp"
     - "{{ ut2_server_web_admin_port }}/tcp"
 
-- name: Flush handlers
-  ansible.builtin.meta: flush_handlers
+- name: Restart instance
+  ansible.builtin.include_tasks: restart.yml
+  when: ut2_server_restart
