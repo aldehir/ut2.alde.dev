@@ -1,6 +1,8 @@
 ---
 server_instance_default_image: ghcr.io/aldehir/ut2/tam-utcomp:main-dev
 
+server_name_suffix: "[{{ inventory_hostname }}]"
+
 server_instances:
   - id: 1
     port: 7777
