@@ -2,22 +2,20 @@ import pulumi
 import pulumi_linode as linode
 import pulumi_cloudflare as cloudflare
 
-from helpers import get_base_image, create_server, generate_export
+from gameservers import UT2GameServerLinode
 
+config = pulumi.Config()
 stack = pulumi.get_stack()
 
-image = get_base_image("rocky8")
+linode_image = "private/21473290"
 
-servers = []
+s = UT2GameServerLinode(
+    f"ut2-01-chi-staging",
+    region="us-ord",
+    type="g6-dedicated-2",
+    zone_name="kokuei.dev",
+    server_name=f"ut2-01.chi.staging.kokuei.dev",
+    image=linode_image,
+)
 
-if stack == "production":
-    servers += [
-        create_server(image.id, 1, "us-ord", "g6-dedicated-2")
-    ]
-
-elif stack == "dev":
-    servers += [
-        create_server(image.id, 1, "us-ord", "g6-dedicated-2")
-    ]
-
-pulumi.export("servers", [generate_export(x) for x in servers])
+pulumi.export(s.server_name, {"ip": s.ip_address, "tags": s.tags})
