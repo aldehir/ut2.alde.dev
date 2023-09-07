@@ -10,10 +10,3 @@ server_instances:
     info:
       name: TAM/UTComp 01 {{ server_name_suffix }}
       admin: "kokuei <hello@kokuei.dev>"
-
-  - id: 2
-    port: 7797
-    admin_port: 8001
-    info:
-      name: TAM/UTComp 02 {{ server_name_suffix }}
-      admin: "kokuei <hello@kokuei.dev>"
