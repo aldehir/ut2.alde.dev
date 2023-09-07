@@ -2,17 +2,19 @@ name: Provision
 on:
   workflow_dispatch:
     inputs:
-      environment:
-        type: string
       limit:
-        type: string
+        type: choice
+        options:
+          - ut2-01.chi.staging.kokuei.dev
+          - ut2-01.dfw.staging.kokuei.dev
 
 jobs:
   provision:
     name: Provision
     runs-on: ubuntu-latest
-    concurrency: deploy-${{ inputs.environment }}
-    environment: ${{ inputs.environment }}
+    concurrency:
+      group: provision-${{ inputs.limit }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v2
 
