@@ -21,9 +21,9 @@ class UT2GameServerLinode(pulumi.ComponentResource):
 
         zone = cloudflare.get_zone(name=zone_name)
         tags = self.tags = [
-            "ut-server",
-            f"ut-server-{pulumi.get_stack()}",
-            f"ut-server-{pulumi.get_stack()}-{name}",
+            "ut2-server",
+            f"ut2-server-{pulumi.get_stack()}",
+            f"ut2-server-{pulumi.get_stack()}-{name}",
         ]
 
         inst = linode.Instance(
