@@ -6,39 +6,39 @@ motd: '{{env "UT2_SERVER_MOTD"}}'
 
 voting:
   configs:
-    - id: tam-4v4
-      name: TAM 4v4
-      game: 3SPNvUFC.TeamArenaMaster
-      prefix: DM
-      mutators:
-        - iTSFake.iTSFake
-        - WtfToolsV1.WtfTools
-        - ScreenSenderFinal.MutScreenSender
-        - XGame.MutNoAdrenaline
-        - ClanManager1h_7T.MutClanManager
-      options:
-        MaxPlayers: 8
-        LightningAmmo: 12
-        ClassicSniperAmmo: 0
-        Tickrate: 100
+    #- id: tam-4v4
+    #  name: TAM 4v4
+    #  game: 3SPNvUFC.TeamArenaMaster
+    #  prefix: DM
+    #  mutators:
+    #    - iTSFake.iTSFake
+    #    - WtfToolsV1.WtfTools
+    #    - ScreenSenderFinal.MutScreenSender
+    #    - XGame.MutNoAdrenaline
+    #    - ClanManager1h_7T.MutClanManager
+    #  options:
+    #    MaxPlayers: 8
+    #    LightningAmmo: 12
+    #    ClassicSniperAmmo: 0
+    #    Tickrate: 100
 
-    - id: tam-4v4-tourney
-      extends: tam-4v4
-      name: TAM 4v4 Tournament Rules
-      options:
-        LightningAmmo: 14
+    #- id: tam-4v4-tourney
+    #  extends: tam-4v4
+    #  name: TAM 4v4 Tournament Rules
+    #  options:
+    #    LightningAmmo: 14
 
-    - id: tam-2v2
-      name: TAM 2v2
-      extends: tam-4v4
-      options:
-        MaxPlayers: 4
+    #- id: tam-2v2
+    #  name: TAM 2v2
+    #  extends: tam-4v4
+    #  options:
+    #    MaxPlayers: 4
 
-    - id: tam-5v5
-      name: TAM 5v5
-      extends: tam-4v4
-      options:
-        MaxPlayers: 10
+    #- id: tam-5v5
+    #  name: TAM 5v5
+    #  extends: tam-4v4
+    #  options:
+    #    MaxPlayers: 10
 
     - id: utcomp-1v1-netcode
       game: XGame.xDeathMatch
