@@ -115,7 +115,7 @@ voting:
         Tickrate: 110
 
     - id: utcomp00-1v1-cup-netcode
-      name: UTComp 1v1 Cup Rules +Netcode
+      name: UTComp00 1v1 Cup Rules +Netcode
       extends: utcomp00-1v1-netcode
       options:
         TimeLimit: 15
