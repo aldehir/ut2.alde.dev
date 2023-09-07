@@ -92,3 +92,31 @@ voting:
       extends: utcomp-2v2-netcode
       options:
         MaxPlayers: 8
+
+    - id: utcomp00-1v1-netcode
+      game: XGame.xDeathMatch
+      name: UTComp00 1v1 +Netcode
+      prefix: DM
+      mutators:
+        - iTSFake.iTSFake
+        - WeaponReplacementv2.MutReplace
+        - UTClassic.MutUseLightning
+        - XGame.MutNoAdrenaline
+        - NoDoubleDamage.MutNoDoubleDamage
+        - XWeapons.MutNoSuperWeapon
+        - UTCompv00.MutUTComp
+        - Tickrate.Tickrate
+      options:
+        MaxPlayers: 2
+        MinPlayers: 2
+        GoalScore: 0
+        TimeLimit: 10
+        WeaponStay: False
+        Tickrate: 110
+
+    - id: utcomp00-1v1-cup-netcode
+      name: UTComp 1v1 Cup Rules +Netcode
+      extends: utcomp00-1v1-netcode
+      options:
+        TimeLimit: 15
+        Tickrate: 60
