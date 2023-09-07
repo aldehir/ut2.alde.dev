@@ -16,7 +16,8 @@ ARG UT2U_VERSION=v0.1.4
 
 ENV UT2_SERVER_NAME="UT2004 Server" \
     UT2_SERVER_ADMIN="" \
-    UT2_SERVER_MOTD=""
+    UT2_SERVER_MOTD="" \
+    UCC=/opt/ut2004/System/ucc-bin-linux-amd64
 
 COPY --from=0 /usr/bin/launcher /usr/bin/launcher
 COPY launch.yml launch.yml
