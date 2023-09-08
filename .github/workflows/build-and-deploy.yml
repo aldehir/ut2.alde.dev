@@ -57,13 +57,13 @@ jobs:
             ${{ env.IMAGE_TAG }}:cache
           push: true
 
-  #deploy:
-  #  name: Deploy
-  #  needs: build
-  #  uses: ./.github/workflows/deploy.yml
-  #  with:
-  #    environment: ${{ inputs.environment }}
-  #  secrets: inherit
+  deploy:
+    name: Deploy
+    needs: build
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: ${{ inputs.environment }}
+    secrets: inherit
 
   sync-redirect:
     name: Synchronize Redirect
