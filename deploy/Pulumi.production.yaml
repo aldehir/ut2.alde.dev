@@ -13,8 +13,8 @@ config:
           name: dfw
         us-ord:
           instances:
-            - g7-premium-2
-            - g7-premium-2
+            - g6-dedicated-2
+            - g6-dedicated-2
           name: chi
   ut2004:domain: kokuei.dev
   ut2004:environment: production

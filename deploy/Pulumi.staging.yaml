@@ -9,7 +9,7 @@ config:
       regions:
         us-ord:
           instances:
-            - g7-premium-2
+            - g6-dedicated-2
           name: chi
   ut2004:domain: staging.kokuei.dev
   ut2004:environment: staging
