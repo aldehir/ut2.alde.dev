@@ -3,6 +3,7 @@
   hosts: ut2_server
 
   tasks:
+    # TODO: Move these to the respective provider base images
     - name: Get active tuned profile
       ansible.builtin.command: tuned-adm active
       register: tuned_active_result
