@@ -64,9 +64,7 @@
     - name: Restore context
       ansible.builtin.command: restorecon -R /var/lib/ut2004
       register: restorecon_result
-      changed_when: >
-        restorecon_result.stdout is not empty or
-        restorecon_result.stderr is not empty
+      changed_when: true
       become: true
 
     - name: Create instance
