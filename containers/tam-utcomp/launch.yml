@@ -42,7 +42,7 @@ voting:
 
     - id: utcomp-1v1-cup-netcode
       name: 1v1 Cup Rules [15m/60hz]
-      extends: utcomp-k-1v1-netcode
+      extends: utcomp-1v1-netcode
       options:
         TimeLimit: 15
         Tickrate: 60
