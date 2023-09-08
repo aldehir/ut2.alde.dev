@@ -1,0 +1,21 @@
+config:
+  cloudflare:apiToken:
+    secure: AAABAMdv7WMBYhP+E5ZKOr4/JKGKXCsuVSfNDyeWo//yzO2WRyYCeLIU9+WrpPCnYpbiihJs+/5YtPmLKbRUe1iHkoNDS7sl
+  linode:token:
+    secure: AAABAItesUlSTSEdz9jkQ4TeZQ6q5HtR2f2DV5BucA0TmidOpFs3Irp+hIhzNvI0wl6HZr12FkwwneWW/o4m6fs74sgfrVRtuxy0chPu9D2ssDNOeNYSLbMmYUyx3APb
+  ut2004:deployment:
+    linode:
+      base: private/21473290
+      regions:
+        us-central:
+          instances:
+            - g6-dedicated-2
+          name: dfw
+        us-ord:
+          instances:
+            - g6-dedicated-2
+            - g6-dedicated-2
+          name: chi
+  ut2004:domain: kokuei.dev
+  ut2004:environment: production
+  ut2004:zone_name: kokuei.dev
