@@ -17,12 +17,18 @@ env:
 jobs:
   build-server-image:
     name: Build Server Image
+    permissions:
+      contents: read
+      packages: write
     uses: ./.github/workflows/build-container.yml
     with:
       image-name: tam-utcomp
 
   build-config-image:
     name: Build Config Image
+    permissions:
+      contents: read
+      packages: write
     uses: ./.github/workflows/build-container.yml
     with:
       image-name: tam-utcomp-config
