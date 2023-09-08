@@ -59,11 +59,13 @@
         target: '/var/lib/ut2004(/.*)?'
         setype: container_file_t
         state: present
+      when: ansible_selinux.mode == "enforcing"
       become: true
 
     - name: Restore context
       ansible.builtin.command: restorecon -R /var/lib/ut2004
       register: restorecon_result
+      when: ansible_selinux.mode == "enforcing"
       changed_when: true
       become: true
 
