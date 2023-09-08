@@ -30,6 +30,7 @@ class UT2GameServerLinode(pulumi.ComponentResource):
             region=region,
             image=image,
             tags=tags,
+            swap_size=2048,
             opts=pulumi.ResourceOptions(parent=self),
         )
 
