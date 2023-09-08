@@ -63,6 +63,7 @@ jobs:
           ANSIBLE_REMOTE_USER: ${{ vars.ANSIBLE_REMOTE_USER }}
           ANSIBLE_FORCE_COLOR: "1"
           LINODE_TOKEN: ${{ secrets.LINODE_TOKEN }}
+          DIGITALOCEAN_TOKEN: ${{ secrets.DIGITALOCEAN_TOKEN }}
         run: |
           ansible-playbook -i deploy/provision/inventory \
             --ssh-extra-args "-o StrictHostKeyChecking=no" \
