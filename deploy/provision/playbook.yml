@@ -1,5 +1,6 @@
 ---
 - name: Provision UT2004 Servers
+  strategy: ansible.builtin.free
   hosts: ut2_server
 
   tasks:
