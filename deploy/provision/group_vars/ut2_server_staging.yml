@@ -1,5 +1,6 @@
 ---
 server_instance_default_image: ghcr.io/aldehir/ut2/tam-utcomp:main-staging
+server_instance_default_config_image: ghcr.io/aldehir/ut2/tam-utcomp-config:main-staging
 
 server_instances:
   - id: 1

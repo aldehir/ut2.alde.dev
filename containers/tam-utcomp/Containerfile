@@ -22,29 +22,19 @@ ENV UT2_SERVER_NAME="UT2004 Server" \
     UCC=/opt/ut2004/System/ucc-bin-linux-amd64
 
 COPY --from=0 /usr/bin/launcher /usr/bin/launcher
-COPY launch.yml launch.yml
-
-COPY --chmod=755 install-packages.sh Community/
-COPY packages.csv Community/
-COPY System .System
+COPY --chmod=755 entrypoint.sh ./entrypoint.sh
 
 RUN curl -sfL -o /usr/bin/ut2u https://github.com/aldehir/ut2u/releases/download/$UT2U_VERSION/ut2u-linux-amd64 && \
     chmod +x /usr/bin/ut2u && \
-    rm -f StaticMeshes/DanielsMeshes.usx && \
-    cp -v .System/*.ini System/ && \
-    mkdir Shared && \
-    touch Shared/XAdmin.ini && \
-    rm -f System/XAdmin.ini && \
-    ln -sf ../Shared/XAdmin.ini System/XAdmin.ini && \
-    (cd Community && ./install-packages.sh) && \
-    ut2u package check-deps System/UT2004.ini && \
-    echo "Package dependency check passed!"
+    mkdir Config
 
 LABEL org.opencontainers.image.created="2023-09-01T12:00:00Z" \
       org.opencontainers.image.authors="Alde Rojas" \
       org.opencontainers.image.title="UT2004 Dedicated Server - TAM/UTComp Configuration" \
       org.opencontainers.image.description="UT2004 Dedicated Server - TAM/UTComp Configuration" \
-      org.opencontainers.image.source="https://github.com/aldehir/ut2004-tam-utcomp-container"
+      org.opencontainers.image.source="https://github.com/aldehir/ut2.kokuei.dev"
 
-ENTRYPOINT ["/usr/bin/launcher"]
+VOLUME ["/opt/ut2004/Config"]
+
+ENTRYPOINT ["/opt/ut2004/entrypoint.sh"]
 CMD ["DM-DE-Ironic-FE.ut2"]

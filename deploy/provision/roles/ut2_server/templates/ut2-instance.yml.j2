@@ -13,6 +13,12 @@ kind: Pod
 metadata:
   name: "{{ ut2_server_instance_name }}"
 spec:
+  initContainers:
+    - name: config
+      image: "{{ ut2_server_config_image }}"
+      volumeMounts:
+        - mountPath: /output
+          name: config
   containers:
     - name: server
       image: "{{ ut2_server_image }}"
@@ -39,4 +45,7 @@ spec:
       hostPath:
         path: /var/lib/ut2004
         type: Directory
+    - name: config
+      emptyDir:
+        sizeLimit: 500Mi
   restartPolicy: OnFailure

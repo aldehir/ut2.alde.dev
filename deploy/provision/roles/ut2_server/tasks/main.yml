@@ -7,16 +7,24 @@
   become: true
   async: 900
   poll: 0
-  register: ut2_server_pull_containers
+  register: ut2_server_pull_container
 
 - name: Wait for pull
   ansible.builtin.async_status:
-    jid: "{{ ut2_server_pull_containers.ansible_job_id }}"
+    jid: "{{ ut2_server_pull_container.ansible_job_id }}"
   become: true
-  register: ut2_server_pull_containers_result
-  until: ut2_server_pull_containers_result.finished
+  register: ut2_server_pull_container_result
+  until: ut2_server_pull_container_result.finished
   retries: 90
   delay: 10
+
+- name: Pull down config container
+  containers.podman.podman_image:
+    name: "{{ ut2_server_config_image }}"
+    force: true
+    pull: true
+  become: true
+  register: ut2_server_pull_config_container
 
 - name: Create a directory for shared files
   ansible.builtin.file:
@@ -51,9 +59,10 @@
 - name: Set restart fact
   ansible.builtin.set_fact:
     ut2_server_restart: >
-      ut2_server_pull_containers_result.changed or
+      ut2_server_pull_container_result.changed or
       ut2_generate_quadlet_result.changed or
-      ut2_generate_kubernetes_yaml_result.changed
+      ut2_generate_kubernetes_yaml_result.changed or
+      ut2_server_pull_config_container.changed
 
 - name: Open up server ports
   ansible.posix.firewalld:

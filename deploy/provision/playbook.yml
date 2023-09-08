@@ -43,6 +43,7 @@
         name: ut2_server
       vars:
         ut2_server_image: "{{ inst.image | default(server_instance_default_image) }}"
+        ut2_server_config_image: "{{ inst.config_image | default(server_instance_default_config_image) }}"
         ut2_server_id: "{{ inst.id }}"
         ut2_server_game_port: "{{ inst.port }}"
         ut2_server_web_admin_port: "{{ inst.admin_port }}"

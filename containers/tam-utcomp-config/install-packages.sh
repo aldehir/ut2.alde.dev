@@ -30,14 +30,9 @@ download_package() {
   curl -sfL -o "$tmpfile" "$download_url"
   ut2u package decompress "$tmpfile"
 
+  mkdir -p "$destination"
   echo "$decompressed -> $destination/$name"
   install -m 644 "$decompressed" "$destination/$name"
-
-  if [[ "$name" =~ \.u$ ]]; then
-    pushd "$system_dir" 1>/dev/null 2>&1
-    ./$ucc exportcache $name 2>&1 | sed "s/\r/\n/"
-    popd 1>/dev/null 2>&1
-  fi
 
   echo
 }

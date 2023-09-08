@@ -1,0 +1,53 @@
+name: Build Container
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+      image-name:
+        type: string
+
+env:
+  IMAGE_REGISTRY: ghcr.io
+  IMAGE_TAG: ghcr.io/${{ github.repository_owner }}/ut2/${{ inputs.image-name }}
+  REGISTRY_USER: ${{ github.actor }}
+  REGISTRY_PASSWORD: ${{ github.token }}
+
+jobs:
+  build:
+    name: Build Image
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    permissions:
+      contents: read
+      packages: write
+
+    outputs:
+      container-image: ${{ env.IMAGE_TAG }}:${{ github.sha }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to ghcr.io
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.IMAGE_REGISTRY }}
+          username: ${{ env.REGISTRY_USER }}
+          password: ${{ env.REGISTRY_PASSWORD }}
+
+      - name: Build and push server image
+        uses: docker/build-push-action@v4
+        with:
+          context: ./containers/${{ inputs.image-name }}
+          file: ./containers/${{ inputs.image-name }}/Containerfile
+          tags: |
+            ${{ env.IMAGE_TAG }}:${{ github.sha }}
+            ${{ env.IMAGE_TAG }}:${{ github.ref_name }}${{ fromJSON('{"staging": "-staging", "production": ""}')[inputs.environment] }}
+          cache-from: |
+            ${{ env.IMAGE_TAG }}:cache
+          cache-to: |
+            ${{ env.IMAGE_TAG }}:cache
+          push: true
