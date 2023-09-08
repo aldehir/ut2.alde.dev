@@ -19,9 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     environment: ${{ inputs.environment || 'staging' }}
-    concurrency:
-      group: deploy-${{ inputs.environment || 'staging' }}
-      cancel-in-progress: true
+    concurrency: deploy-${{ inputs.environment || 'staging' }}
 
     permissions:
       contents: read
