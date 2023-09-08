@@ -3,6 +3,18 @@
   hosts: ut2_server
 
   tasks:
+    - name: Get active tuned profile
+      ansible.builtin.command: tuned-adm active
+      register: tuned_active_result
+      changed_when: false
+      become: true
+
+    - name: Set tuned profile to network-latency
+      ansible.builtin.command: tuned-adm profile network-latency
+      when: '"network-latency" not in tuned_active_result.stdout'
+      changed_when: true
+      become: true
+
     - name: Create instance
       ansible.builtin.include_role:
         name: ut2_server
