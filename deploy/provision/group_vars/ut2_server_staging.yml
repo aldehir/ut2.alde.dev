@@ -8,3 +8,17 @@ server_instances:
     info:
       name: UTComp Duels [{{ inventory_hostname }}/1]
       admin: "kokuei <hello@kokuei.dev>"
+
+  - id: 2
+    port: 7797
+    admin_port: 8001
+    info:
+      name: UTComp Duels [{{ inventory_hostname }}/2]
+      admin: "kokuei <hello@kokuei.dev>"
+
+  - id: 3
+    port: 7817
+    admin_port: 8002
+    info:
+      name: UTComp Duels [{{ inventory_hostname }}/3]
+      admin: "kokuei <hello@kokuei.dev>"
