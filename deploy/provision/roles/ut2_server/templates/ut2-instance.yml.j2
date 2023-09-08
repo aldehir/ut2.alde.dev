@@ -22,6 +22,10 @@ spec:
       volumeMounts:
         - mountPath: /opt/ut2004/Shared
           name: shared
+      resources:
+        limits:
+          cpu: "500m"
+          memory: "1Gi"
       ports:
         - containerPort: 7777
           protocol: UDP
