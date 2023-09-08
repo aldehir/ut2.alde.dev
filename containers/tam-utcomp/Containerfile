@@ -7,10 +7,12 @@ RUN CGO_ENABLE=0 go build -o /usr/bin/launcher .
 # UT2004 container
 FROM ghcr.io/aldehir/ut2/base:3369.3-release-2
 
+ARG COMMUNITY_MAPS_URL=https://cdn.alde.dev/ut2k4/packs/ut2004-ufc-community-maps.zip?checksum=sha256:f8e294ae7e990d5a97edca453473477a761477478cb7f5b0e2570095a8067b41
+
 RUN dnf install -y bsdtar && \
     mkdir Community && \
     cd Community && \
-    curl -sfL https://cdn.alde.dev/ut2k4/packs/ut2004-ufc-community-maps.zip | bsdtar -x --no-same-owner -vf -
+    curl -sfL $COMMUNITY_MAPS_URL | bsdtar -x --no-same-owner -vf -
 
 ARG UT2U_VERSION=v0.1.4
 
