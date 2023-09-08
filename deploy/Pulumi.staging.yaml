@@ -6,17 +6,17 @@ config:
   linode:token:
     secure: AAABAGaop7j81ACBafPhyLVjAIM7l45Lqrxn3N4gdP+efiE/zQILqEyHF5N7+UM36THzqMm3BTcdk/i0KQC8d6rZWhhIexQh3mSk0sBoYMBHz6TeWHCL/TpG7/ZYAWcp
   ut2004:deployment:
-    digitalocean:
+    - provider: digitalocean
       base: "140050073"
       regions:
-        nyc1:
+        - id: nyc1
           instances:
             - c-2
           name: nyc
-    linode:
+    - provider: linode
       base: private/21473290
       regions:
-        us-ord:
+        - id: us-ord
           instances:
             - g6-dedicated-2
           name: chi

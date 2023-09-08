@@ -22,14 +22,16 @@ assert deployment
 instances = []
 region_instance_counts = {}
 
-for provider, provider_config in deployment.items():
+for provider_config in deployment:
+    provider = provider_config["provider"]
+    base = provider_config["base"]
+
     Server = UT2GameServerLinode
     if provider == "digitalocean":
         Server = UT2GameServerDigitalOcean
 
-    base = provider_config["base"]
-
-    for region_id, region_config in provider_config["regions"].items():
+    for region_config in provider_config["regions"]:
+        region_id = region_config["id"]
         region_name = region_config["name"]
 
         for instance_type in region_config["instances"]:
