@@ -3,7 +3,7 @@ on:
   workflow_call:
     inputs:
       environment:
-        type: environment
+        type: string
 
 jobs:
   create-instances:
