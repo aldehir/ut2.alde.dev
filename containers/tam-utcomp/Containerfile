@@ -47,4 +47,4 @@ LABEL org.opencontainers.image.created="2023-09-01T12:00:00Z" \
       org.opencontainers.image.source="https://github.com/aldehir/ut2004-tam-utcomp-container"
 
 ENTRYPOINT ["/usr/bin/launcher"]
-CMD ["DM-Antalus"]
+CMD ["DM-DE-Ironic-FE.ut2"]
