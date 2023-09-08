@@ -2,6 +2,17 @@
 - name: Provision UT2004 Servers
   hosts: ut2_server
 
+  handlers:
+    - name: Generate GRUB
+      ansible.builtin.command: grub2-mkconfig -o /boot/grub2/grub.cfg
+      changed_when: true
+      notify: Reboot
+      become: true
+
+    - name: Reboot
+      ansible.builtin.reboot:
+      become: true
+
   tasks:
     - name: Get active tuned profile
       ansible.builtin.command: tuned-adm active
@@ -12,6 +23,7 @@
     - name: Set tuned profile to network-latency
       ansible.builtin.command: tuned-adm profile network-latency
       when: '"network-latency" not in tuned_active_result.stdout'
+      notify: Generate GRUB
       changed_when: true
       become: true
 
