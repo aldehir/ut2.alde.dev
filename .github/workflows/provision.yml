@@ -5,8 +5,8 @@ on:
       limit:
         type: choice
         options:
-          - ut2-01.chi.staging.kokuei.dev
-          - ut2-01.dfw.staging.kokuei.dev
+          - ut2.chi-1.staging.kokuei.dev
+          - ut2.dfw-1.staging.kokuei.dev
 
 jobs:
   provision:

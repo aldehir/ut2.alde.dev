@@ -3,3 +3,19 @@ config:
     secure: AAABADq7NBnswAvr+a82rVujK9IrBPKVQTr5e+eEnCI6AdhEeIU5+FqH0BbbJ5MnH4AIRm7L0wYh3KSYm1Pf7fBMXeMB9c36
   linode:token:
     secure: AAABAEtU8jOQt0qL12yALp+mQT++iqn59PuU2KtMlGePnvCvkWYM6LBtlbZOsJEM+xP6abFsT1N/reM5x1Pok+OG6a9/SG0z9Atz3lX2vcG/KgYn2rIXXLcsF0g9/QIq
+  environment: staging
+  zone_name: kokuei.dev
+  domain: staging.kokuei.dev
+  deployment:
+    linode:
+      base: private/21473290
+      regions:
+        us-ord:
+          name: chi
+          instances:
+            - g6-dedicated-2
+
+        us-central:
+          name: dfw
+          instances:
+            - g6-dedicated-2

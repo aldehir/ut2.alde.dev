@@ -3,7 +3,7 @@ on:
   workflow_call:
     inputs:
       environment:
-        type: string
+        type: environment
 
 jobs:
   create-instances:
@@ -59,7 +59,7 @@ jobs:
 
       - name: Run Playbook
         env:
-          LIMIT: ${{ vars.PULUMI_STACK }}
+          LIMIT: ${{ inputs.ENVIRONMENT }}
           ANSIBLE_REMOTE_USER: ${{ vars.ANSIBLE_REMOTE_USER }}
           ANSIBLE_FORCE_COLOR: "1"
           LINODE_TOKEN: ${{ secrets.LINODE_TOKEN }}

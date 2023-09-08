@@ -8,6 +8,7 @@ on:
     branches: [main]
 
 env:
+  ENVIRONMENT: ${{ inputs.environment || "staging" }}
   IMAGE_REGISTRY: ghcr.io
   IMAGE_TAG: ghcr.io/${{ github.repository_owner }}/ut2/tam-utcomp
   REGISTRY_USER: ${{ github.actor }}
@@ -18,7 +19,7 @@ jobs:
     name: Build TAM/UTComp Image
     runs-on: ubuntu-latest
 
-    environment: ${{ inputs.environment }}
+    environment: ${{ env.ENVIRONMENT }}
     concurrency:
       group: deploy-${{ inputs.environment }}
       cancel-in-progress: true

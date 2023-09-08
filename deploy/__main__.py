@@ -2,31 +2,48 @@ import pulumi
 import pulumi_linode as linode
 import pulumi_cloudflare as cloudflare
 
+import typing
+
 from gameservers import UT2GameServerLinode
 
 config = pulumi.Config()
 stack = pulumi.get_stack()
 
-linode_image = "private/21473290"
+environment: typing.Optional[str] = config.get("environment")
+zone_name: typing.Optional[str] = config.get("zone_name")
+domain: typing.Optional[str] = config.get("domain")
+deployment: typing.Optional[dict[str, typing.Any]] = config.get_object("deployment")
 
-chi01 = UT2GameServerLinode(
-    f"ut2-01-chi-staging",
-    region="us-ord",
-    type="g6-dedicated-2",
-    zone_name="kokuei.dev",
-    server_name=f"ut2-01.chi.staging.kokuei.dev",
-    image=linode_image,
-)
+assert environment
+assert zone_name
+assert domain
+assert deployment
 
-pulumi.export(chi01.server_name, {"ip": chi01.ip_address, "tags": chi01.tags})
+instances = []
 
-dfw01 = UT2GameServerLinode(
-    f"ut2-01-dfw-staging",
-    region="us-central",
-    type="g6-dedicated-2",
-    zone_name="kokuei.dev",
-    server_name=f"ut2-01.dfw.staging.kokuei.dev",
-    image=linode_image,
-)
+for provider, provider_config in deployment.items():
+    if provider == "linode":
+        base = provider_config["base"]
 
-pulumi.export(dfw01.server_name, {"ip": dfw01.ip_address, "tags": dfw01.tags})
+        for region_id, region_config in provider_config["regions"].items():
+            region_name = region_config["name"]
+
+            for i, instance_type in enumerate(region_config["instances"], 1):
+                instance_name = f"ut2.{region_name}-{i}.{domain}"
+
+                s = UT2GameServerLinode(
+                    instance_name,
+                    region=region_id,
+                    type=instance_type,
+                    zone_name=zone_name,
+                    server_name=instance_name,
+                    image=base,
+                    tags=[
+                        "ut2-server",
+                        f"ut2-server-{environment}"
+                    ],
+                )
+
+                instances.append(s)
+
+pulumi.export("instances", [{"name": x.server_name, "ip": x.ip_address, "tags": x.tags} for x in instances])

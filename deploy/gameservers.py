@@ -14,17 +14,14 @@ class UT2GameServerLinode(pulumi.ComponentResource):
         zone_name: str = "",
         server_name: str = "",
         image: str = "",
+        tags: list[str] = [],
     ):
         super().__init__("pkg:index:UT2GameServerLinode", name, None, opts)
 
         self.server_name = server_name
+        self.tags = tags
 
         zone = cloudflare.get_zone(name=zone_name)
-        tags = self.tags = [
-            "ut2-server",
-            f"ut2-server-{pulumi.get_stack()}",
-            f"ut2-server-{pulumi.get_stack()}-{name}",
-        ]
 
         inst = linode.Instance(
             f"{name}-instance",
