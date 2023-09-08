@@ -40,16 +40,16 @@ voting:
     #  options:
     #    MaxPlayers: 10
 
-    - id: utcomp-k-1v1-cup-netcode
-      name: UTCompv18b_k1 1v1 Cup Rules [15m/60hz]
+    - id: utcomp-1v1-cup-netcode
+      name: 1v1 Cup Rules [15m/60hz]
       extends: utcomp-k-1v1-netcode
       options:
         TimeLimit: 15
         Tickrate: 60
 
-    - id: utcomp-k-1v1-netcode
+    - id: utcomp-1v1-netcode
       game: XGame.xDeathMatch
-      name: UTCompv18b_k1 1v1 [10m/110hz]
+      name: 1v1 [10m/110hz]
       prefix: DM
       mutators:
         - iTSFake.iTSFake
@@ -68,43 +68,15 @@ voting:
         WeaponStay: False
         Tickrate: 110
 
-    - id: utcomp-1v1-netcode
-      game: XGame.xDeathMatch
-      name: UTComp 1v1 +Netcode
-      prefix: DM
-      mutators:
-        - iTSFake.iTSFake
-        - WeaponReplacementv2.MutReplace
-        - UTClassic.MutUseLightning
-        - XGame.MutNoAdrenaline
-        - NoDoubleDamage.MutNoDoubleDamage
-        - XWeapons.MutNoSuperWeapon
-        - UTCompv18c.MutUTComp
-        - Tickrate.Tickrate
-      options:
-        MaxPlayers: 2
-        MinPlayers: 2
-        GoalScore: 0
-        TimeLimit: 10
-        WeaponStay: False
-        Tickrate: 110
-
-    - id: utcomp-1v1-cup-netcode
-      name: UTComp 1v1 Cup Rules +Netcode
-      extends: utcomp-1v1-netcode
-      options:
-        TimeLimit: 15
-        Tickrate: 60
-
     - id: utcomp-2v2-netcode
-      name: UTComp 2v2 +Netcode
+      name: UTComp 2v2
       prefix: TDM
       mutators:
         - iTSFake.iTSFake
         - WeaponReplacementv2.MutReplace
         - UTClassic.MutUseLightning
         - XWeapons.MutNoSuperWeapon
-        - UTCompv18c.MutUTComp
+        - UTCompv18b_k1.MutUTComp
         - Tickrate.Tickrate
       options:
         MaxPlayers: 4
@@ -114,9 +86,3 @@ voting:
         WeaponStay: False
         FriendlyFire: 1.0
         Tickrate: 60
-
-    - id: utcomp-4v4-netcode
-      name: UTComp 4v4 +Netcode
-      extends: utcomp-2v2-netcode
-      options:
-        MaxPlayers: 8
