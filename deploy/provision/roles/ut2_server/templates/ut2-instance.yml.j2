@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ ut2_server_instance_name }}-config
+  name: {{ ut2_server_instance_name }}-config-map
 data:
   UT2_SERVER_NAME: {{ ut2_server_info_name }}
   UT2_SERVER_ADMIN: {{ ut2_server_info_admin }}
@@ -18,18 +18,18 @@ spec:
       image: "{{ ut2_server_config_image }}"
       volumeMounts:
         - mountPath: /output
-          name: config
+          name: {{ ut2_server_instance_name }}-config
   containers:
     - name: server
       image: "{{ ut2_server_image }}"
       envFrom:
         - configMapRef:
-            name: {{ ut2_server_instance_name }}-config
+            name: {{ ut2_server_instance_name }}-config-map
       volumeMounts:
         - mountPath: /opt/ut2004/Shared
           name: shared
         - mountPath: /opt/ut2004/Config
-          name: config
+          name: {{ ut2_server_instance_name }}-config
       resources:
         limits:
           cpu: "500m"
@@ -47,7 +47,7 @@ spec:
       hostPath:
         path: /var/lib/ut2004
         type: Directory
-    - name: config
+    - name: {{ ut2_server_instance_name }}-config
       emptyDir:
         sizeLimit: 500Mi
   restartPolicy: OnFailure
