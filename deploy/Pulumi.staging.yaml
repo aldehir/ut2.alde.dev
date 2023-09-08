@@ -23,6 +23,7 @@ config:
         - id: us-east
           instances:
             - g6-dedicated-2
+          name: nj
   ut2004:domain: staging.kokuei.dev
   ut2004:environment: staging
   ut2004:zone_name: kokuei.dev
