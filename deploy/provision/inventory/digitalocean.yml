@@ -6,8 +6,9 @@ attributes:
   - networks
   - tags
 keyed_groups:
-  - key: do_tags | lower
+  - key: do_tags | lower | replace('-', '_')
     prefix: ''
     separator: ''
 compose:
   ansible_ssh_host: do_networks.v4 | selectattr('type', 'eq', 'public') | map(attribute='ip_address') | first
+
