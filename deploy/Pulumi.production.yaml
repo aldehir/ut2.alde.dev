@@ -1,6 +1,8 @@
 config:
   cloudflare:apiToken:
     secure: AAABAMdv7WMBYhP+E5ZKOr4/JKGKXCsuVSfNDyeWo//yzO2WRyYCeLIU9+WrpPCnYpbiihJs+/5YtPmLKbRUe1iHkoNDS7sl
+  digitalocean:token:
+    secure: AAABAG2E/0Q4iOY4YE0gCqF9l9tJSGsStL29vhXYth2ZY9vPF47dJwghT+uHxh3XGPbrvOIE7FdOciZWUDlQMd+rrxYgJgq0KLWAJbvtstP2o8ByKzL6D/vE6lWUShsVtq609EZ8Fg==
   linode:token:
     secure: AAABAItesUlSTSEdz9jkQ4TeZQ6q5HtR2f2DV5BucA0TmidOpFs3Irp+hIhzNvI0wl6HZr12FkwwneWW/o4m6fs74sgfrVRtuxy0chPu9D2ssDNOeNYSLbMmYUyx3APb
   ut2004:deployment:
