@@ -6,6 +6,13 @@ config:
   linode:token:
     secure: AAABAItesUlSTSEdz9jkQ4TeZQ6q5HtR2f2DV5BucA0TmidOpFs3Irp+hIhzNvI0wl6HZr12FkwwneWW/o4m6fs74sgfrVRtuxy0chPu9D2ssDNOeNYSLbMmYUyx3APb
   ut2004:deployment:
+    digitalocean:
+      base: "140050073"
+      regions:
+        nyc1:
+          instances:
+            - c-2
+          name: nyc
     linode:
       base: private/21473290
       regions:
