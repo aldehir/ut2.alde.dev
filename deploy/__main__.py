@@ -20,6 +20,7 @@ assert domain
 assert deployment
 
 instances = []
+region_instance_counts = {}
 
 for provider, provider_config in deployment.items():
     Server = UT2GameServerLinode
@@ -31,8 +32,12 @@ for provider, provider_config in deployment.items():
     for region_id, region_config in provider_config["regions"].items():
         region_name = region_config["name"]
 
-        for i, instance_type in enumerate(region_config["instances"], 1):
-            instance_name = f"ut2.{region_name}-{i}.{domain}"
+        for instance_type in region_config["instances"]:
+            # Ensure that regions across providers don't overlay
+            count = region_instance_counts.get(region_name, 0)
+            count = region_instance_counts[region_name] = count + 1
+
+            instance_name = f"ut2.{region_name}-{count}.{domain}"
 
             s = Server(
                 instance_name,
