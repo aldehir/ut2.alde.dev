@@ -8,6 +8,7 @@ COPY --chmod=755 entrypoint.sh ./
 COPY --chmod=755 install-packages.sh ./
 COPY packages.csv ./
 COPY System ./System
+Copy UT2004.ini ./
 COPY launch.yml ./
 
 RUN curl -sfL -o /usr/bin/ut2u https://github.com/aldehir/ut2u/releases/download/$UT2U_VERSION/ut2u-linux-amd64 && \
