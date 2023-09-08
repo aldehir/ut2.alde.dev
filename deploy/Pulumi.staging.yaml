@@ -1,9 +1,18 @@
 config:
   cloudflare:apiToken:
     secure: AAABAO9/DfbM20y5lDDuA3gIfSU7JPOn4zWcwgnvPG5tw0EZ6yOqeuRy64HQ1Ri236/0eGk575bok2YxUCsQH8x7jKgwvCJM
+  digitalocean:token:
+    secure: AAABAEoUalSWPSsb/LEGHiVPgguvyYh4d6oHpUzocAN2OduiiSk7JhpCeUWAxBHmqjZYKm3/490/qkHs7hb6TQ6wSZhXqn7eiu+pEoB/ikB5aeBPMxrQz2wyCBFGLzc2KJggUU0RBg==
   linode:token:
     secure: AAABAGaop7j81ACBafPhyLVjAIM7l45Lqrxn3N4gdP+efiE/zQILqEyHF5N7+UM36THzqMm3BTcdk/i0KQC8d6rZWhhIexQh3mSk0sBoYMBHz6TeWHCL/TpG7/ZYAWcp
   ut2004:deployment:
+    digitalocean:
+      base: "140050073"
+      regions:
+        nyc1:
+          instances:
+            - c-2
+          name: nyc
     linode:
       base: private/21473290
       regions:
