@@ -36,7 +36,37 @@
           - python3
           - python3-firewall
           - python3-podman
+          - python3-libselinux
         state: present
+      become: true
+
+    - name: Create a directory for shared files
+      ansible.builtin.file:
+        path: /var/lib/ut2004
+        state: directory
+        mode: "0755"
+      become: true
+
+    - name: Generate an XAdmin.ini
+      ansible.builtin.template:
+        src: XAdmin.ini.j2
+        dest: /var/lib/ut2004/XAdmin.ini
+        mode: "0600"
+      become: true
+
+    - name: Add selinux context for shared directory
+      community.general.sefcontext:
+        target: '/var/lib/ut2004(/.*)?'
+        setype: container_file_t
+        state: present
+      become: true
+
+    - name: Restore context
+      ansible.builtin.command: restorecon -R /var/lib/ut2004
+      register: restorecon_result
+      changed_when: >
+        restorecon_result.stdout is not empty or
+        restorecon_result.stderr is not empty
       become: true
 
     - name: Create instance
