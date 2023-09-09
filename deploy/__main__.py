@@ -50,7 +50,8 @@ for provider_config in deployment:
                 image=base,
                 tags=[
                     "ut2-server",
-                    f"ut2-server-{environment}"
+                    f"ut2-server-{environment}",
+                    "monitoring",
                 ],
             )
 
