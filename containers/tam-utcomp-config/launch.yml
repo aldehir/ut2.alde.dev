@@ -47,9 +47,15 @@ voting:
         TimeLimit: 15
         Tickrate: 60
 
+    - id: utcomp-1v1-cup-netcode
+      name: 2. 1v1 Cup Rules [15m/60hz/20sTimers]
+      extends: utcomp-1v1-cup-netcode
+      mutators:
+        - kMods.RespawnTimers
+
     - id: utcomp-1v1-netcode
       game: XGame.xDeathMatch
-      name: 2. 1v1 [10m/110hz]
+      name: 3. 1v1 [10m/110hz]
       prefix: DM
       mutators:
         - iTSFake.iTSFake
@@ -69,7 +75,7 @@ voting:
         Tickrate: 110
 
     - id: utcomp-2v2-netcode
-      name: 3. 2v2
+      name: 4. 2v2
       prefix: TDM
       mutators:
         - iTSFake.iTSFake
