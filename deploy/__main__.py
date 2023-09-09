@@ -40,13 +40,14 @@ for provider_config in deployment:
             count = region_instance_counts[region_name] = count + 1
 
             instance_name = f"ut2.{region_name}-{count}.{domain}"
+            dns_name = f"{region_name}-{count}.{domain}"
 
             s = Server(
                 instance_name,
                 region=region_id,
                 type=instance_type,
                 zone_name=zone_name,
-                server_name=instance_name,
+                server_name=dns_name,
                 image=base,
                 tags=[
                     "ut2-server",

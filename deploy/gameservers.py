@@ -26,7 +26,7 @@ class UT2GameServerLinode(pulumi.ComponentResource):
 
         inst = linode.Instance(
             f"{name}-instance",
-            label=server_name,
+            label=f"ut2.{server_name}",
             type=type,
             region=region,
             image=image,
@@ -37,6 +37,15 @@ class UT2GameServerLinode(pulumi.ComponentResource):
 
         cloudflare.Record(
             f"{name}-record",
+            zone_id=zone.id,
+            name=f"ut2.{server_name}",
+            type="A",
+            value=inst.ip_address,
+            opts=ResourceOptions(parent=self),
+        )
+
+        cloudflare.Record(
+            f"{name}-record-2",
             zone_id=zone.id,
             name=server_name,
             type="A",
