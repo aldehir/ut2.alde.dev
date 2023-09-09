@@ -23,7 +23,7 @@
 - name: Download the node exporter
   ansible.builtin.get_url:
     url: "{{ metrics_node_exporter_url }}"
-    dest: /root/Downloads/
+    dest: /root/
     mode: "0644"
   register: metrics_node_exporter_download
   become: true
