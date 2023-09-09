@@ -6,13 +6,6 @@ config:
   linode:token:
     secure: AAABAGaop7j81ACBafPhyLVjAIM7l45Lqrxn3N4gdP+efiE/zQILqEyHF5N7+UM36THzqMm3BTcdk/i0KQC8d6rZWhhIexQh3mSk0sBoYMBHz6TeWHCL/TpG7/ZYAWcp
   ut2004:deployment:
-    - provider: digitalocean
-      base: "140050073"
-      regions:
-        - id: nyc1
-          instances:
-            - c-2
-          name: nyc
     - provider: linode
       base: private/21473290
       regions:
@@ -20,10 +13,6 @@ config:
           instances:
             - g6-dedicated-2
           name: chi
-        - id: us-east
-          instances:
-            - g6-dedicated-2
-          name: nj
   ut2004:domain: staging.kokuei.dev
   ut2004:environment: staging
   ut2004:zone_name: kokuei.dev
