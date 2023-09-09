@@ -30,6 +30,8 @@ spec:
           name: shared
         - mountPath: /opt/ut2004/Config
           name: {{ ut2_server_instance_name }}-config
+        - mountPath: /opt/ut2004/UserLogs
+          name: shared-user-logs
       resources:
         limits:
           cpu: "500m"
@@ -45,7 +47,11 @@ spec:
   volumes:
     - name: shared
       hostPath:
-        path: /var/lib/ut2004
+        path: /var/lib/ut2004/Config
+        type: Directory
+    - name: shared-user-logs
+      hostPath:
+        path: /var/lib/ut2004/UserLogs
         type: Directory
     - name: {{ ut2_server_instance_name }}-config
       emptyDir:

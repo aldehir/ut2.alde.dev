@@ -40,17 +40,20 @@
         state: present
       become: true
 
-    - name: Create a directory for shared files
+    - name: Create directories for shared files
       ansible.builtin.file:
-        path: /var/lib/ut2004
+        path: "{{ item }}"
         state: directory
         mode: "0755"
       become: true
+      loop:
+        - /var/lib/ut2004/Config
+        - /var/lib/ut2004/UserLogs
 
     - name: Generate an XAdmin.ini
       ansible.builtin.template:
         src: XAdmin.ini.j2
-        dest: /var/lib/ut2004/XAdmin.ini
+        dest: /var/lib/ut2004/Config/XAdmin.ini
         mode: "0600"
       become: true
 
