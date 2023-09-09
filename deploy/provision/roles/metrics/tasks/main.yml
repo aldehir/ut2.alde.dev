@@ -1,9 +1,17 @@
 ---
+- name: Install nginx
+  ansible.builtin.package:
+    name: nginx
+    state: present
+  become: true
+
 - name: Upload metrics CA
   ansible.builtin.copy:
     content: "{{ metrics_endpoint_ca }}\n"
     dest: /etc/pki/tls/certs/metrics-ca.crt
     mode: "0644"
+    owner: nginx
+    group: nginx
   become: true
 
 - name: Upload certificate
@@ -11,6 +19,8 @@
     content: "{{ metrics_endpoint_certificate }}\n"
     dest: /etc/pki/tls/certs/metrics.crt
     mode: "0644"
+    owner: nginx
+    group: nginx
   become: true
 
 - name: Upload certificate key
@@ -18,6 +28,32 @@
     content: "{{ metrics_endpoint_certificate_key }}\n"
     dest: /etc/pki/tls/private/metrics.key
     mode: "0600"
+    owner: nginx
+    group: nginx
+  become: true
+
+- name: Install nginx.conf
+  ansible.builtin.copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    mode: "0644"
+  notify: Restart nginx
+  become: true
+
+- name: Enable https
+  ansible.posix.firewalld:
+    service: https
+    state: enabled
+    zone: public
+    immediate: true
+    permanent: true
+  become: true
+
+- name: Start nginx
+  ansible.builtin.service:
+    name: nginx.service
+    state: started
+    enabled: true
   become: true
 
 - name: Download the node exporter
@@ -60,6 +96,7 @@
     src: node_exporter.service
     dest: /etc/systemd/system/node_exporter.service
     mode: "0644"
+  notify: Restart node_exporter
   become: true
 
 - name: Enable and start node_exporter
@@ -70,11 +107,11 @@
     daemon_reload: true
   become: true
 
-- name: Enable port 9100
+- name: Disable port 9100
   ansible.posix.firewalld:
     port: 9100/tcp
     zone: public
-    state: enabled
+    state: disabled
     immediate: true
     permanent: true
   become: true
