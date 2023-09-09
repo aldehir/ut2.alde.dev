@@ -50,7 +50,7 @@ voting:
       name: 2. 1v1 [15m/20sTimers]
       extends: utcomp-1v1-15m-netcode
       mutators:
-        - kMods.RespawnTimers
+        - kMods.MutRespawnTimers
 
     - id: utcomp-1v1-10m-netcode
       game: XGame.xDeathMatch
@@ -78,7 +78,7 @@ voting:
       name: 4. 1v1 [10m/20sTimers]
       extends: utcomp-1v1-10m-netcode
       mutators:
-        - kMods.RespawnTimers
+        - kMods.MutRespawnTimers
 
     - id: utcomp-2v2-netcode
       name: 5. 2v2
