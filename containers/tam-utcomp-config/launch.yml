@@ -47,7 +47,7 @@ voting:
         TimeLimit: 15
         Tickrate: 60
 
-    - id: utcomp-1v1-cup-netcode
+    - id: utcomp-1v1-cup-netcode-timers
       name: 2. 1v1 Cup Rules [15m/60hz/20sTimers]
       extends: utcomp-1v1-cup-netcode
       mutators:
