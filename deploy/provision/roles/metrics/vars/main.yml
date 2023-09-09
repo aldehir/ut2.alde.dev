@@ -1,0 +1,2 @@
+---
+metrics_node_exporter_name: "{{ metrics_node_exporter_url | basename | replace('.tar.gz', '') }}"

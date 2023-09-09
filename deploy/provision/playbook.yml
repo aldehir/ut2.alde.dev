@@ -83,3 +83,14 @@
       loop: "{{ server_instances }}"
       loop_control:
         loop_var: inst
+
+
+- name: Configure Monitoring
+  strategy: ansible.builtin.free
+  hosts: monitoring
+
+  vars_files:
+    - certs.yml
+
+  roles:
+    - metrics
