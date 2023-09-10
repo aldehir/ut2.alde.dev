@@ -6,6 +6,15 @@ on:
         type: string
       image-name:
         type: string
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+      image-name:
+        type: choice
+        options:
+          - tam-utcomp-config
+          - tam-utcomp
 
 env:
   IMAGE_REGISTRY: ghcr.io
