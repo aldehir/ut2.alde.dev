@@ -3,6 +3,7 @@
 name: '{{env "UT2_SERVER_NAME" "UT2004 Server"}}'
 admin: '{{env "UT2_SERVER_ADMIN"}}'
 motd: '{{env "UT2_SERVER_MOTD"}}'
+port: '{{env "UT2_SERVER_PORT" "7777"}}'
 
 voting:
   configs:

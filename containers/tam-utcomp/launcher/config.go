@@ -16,6 +16,8 @@ type Config struct {
 	Admin string `yaml:"admin"`
 	MOTD  string `yaml:"motd"`
 
+	Port string `yaml:"port"`
+
 	Voting *VotingConfig `yaml:"voting"`
 }
 

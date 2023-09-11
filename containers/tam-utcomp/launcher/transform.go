@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -72,6 +73,27 @@ func (c Config) Transform(w io.Writer, r io.Reader) error {
 		key, _, found := strings.Cut(line, "=")
 		if !found {
 			writeLine()
+			continue
+		}
+
+		if strings.EqualFold(section, "URL") {
+			switch strings.ToLower(key) {
+			case "port":
+				value, err := Evaluate(c.Port)
+				if err != nil {
+					return err
+				}
+
+				port, err := strconv.ParseUint(value, 10, 64)
+				if err != nil {
+					return err
+				}
+
+				fmt.Fprintf(out, "%s=%d\n", key, port)
+			default:
+				writeLine()
+			}
+
 			continue
 		}
 
