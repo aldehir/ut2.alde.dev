@@ -4,6 +4,11 @@
   hosts: ut2_server
 
   tasks:
+    - name: Set hostname to inventory_hostname (without the ut2.)
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname | replace('ut2.', '') }}"
+      become: true
+
     # TODO: Move these to the respective provider base images
     - name: Get active tuned profile
       ansible.builtin.command: tuned-adm active
