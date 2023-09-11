@@ -7,12 +7,15 @@ data:
   UT2_SERVER_NAME: {{ ut2_server_info_name }}
   UT2_SERVER_ADMIN: {{ ut2_server_info_admin }}
   UT2_SERVER_MOTD: {{ ut2_server_info_motd }}
+  UT2_SERVER_PORT: {{ ut2_server_game_port }}
   UCC: /opt/ut2004/System/ucc-bin
 ---
 apiVersion: v1
 kind: Pod
 metadata:
   name: "{{ ut2_server_instance_name }}"
+  labels:
+    app: "{{ ut2_server_instance_name }}"
 spec:
   initContainers:
     - name: config
@@ -38,13 +41,10 @@ spec:
           cpu: "500m"
           memory: "1Gi"
       ports:
-        - containerPort: 7777
+        - containerPort: {{ ut2_server_game_port }}
           protocol: UDP
-        - containerPort: 7778
+        - containerPort: {{ ut2_server_query_port }}
           protocol: UDP
-        - containerPort: 7787
-          protocol: UDP
-        - containerPort: 80
   volumes:
     - name: shared
       hostPath:
@@ -58,3 +58,19 @@ spec:
       emptyDir:
         sizeLimit: 500Mi
   restartPolicy: OnFailure
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ ut2_server_instance_name }}-service
+spec:
+  selector:
+    app: {{ ut2_server_instance_name }}
+  ports:
+    - protocol: UDP
+      port: {{ ut2_server_game_port }}
+      targetPort: {{ ut2_server_game_port }}
+
+    - protocol: UDP
+      port: {{ ut2_server_query_port }}
+      targetPort: {{ ut2_server_query_port }}
