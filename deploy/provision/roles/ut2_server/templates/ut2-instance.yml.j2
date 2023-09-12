@@ -49,10 +49,10 @@ spec:
     - name: shared
       hostPath:
         path: /var/lib/ut2004/Config
-        type: Directory
+        type: DirectoryOrCreate
     - name: shared-user-logs
       hostPath:
-        path: /var/lib/ut2004/UserLogs
+        path: /var/lib/ut2004/UserLogs/{{ ut2_server_instance_name }}
         type: Directory
     - name: {{ ut2_server_instance_name }}-config
       emptyDir:

@@ -1,2 +1,9 @@
 ---
 metrics_node_exporter_url: https://github.com/prometheus/node_exporter/releases/download/v1.6.1/node_exporter-1.6.1.linux-amd64.tar.gz
+
+metrics_promtail_rpm: https://github.com/grafana/loki/releases/download/v2.9.0/promtail-2.9.0.x86_64.rpm
+
+metrics_promtail_loki_endpoint: https://logs.kokuei.dev/loki/api/v1/push
+metrics_promtail_loki_tenant_id: kokuei.dev
+metrics_promtail_loki_user:
+metrics_promtail_loki_password:

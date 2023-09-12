@@ -15,3 +15,15 @@
     name: node_exporter.service
     state: restarted
   become: true
+
+- name: Restart promtail
+  ansible.builtin.service:
+    name: promtail.service
+    state: restarted
+  become: true
+
+- name: Restart rsyslog
+  ansible.builtin.service:
+    name: rsyslog.service
+    state: restarted
+  become: true

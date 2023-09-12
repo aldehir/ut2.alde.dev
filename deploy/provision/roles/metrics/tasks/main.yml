@@ -115,3 +115,42 @@
     immediate: true
     permanent: true
   become: true
+
+- name: Install promtail
+  ansible.builtin.package:
+    name: "{{ metrics_promtail_rpm }}"
+    state: present
+  become: true
+
+- name: Configure promtail
+  ansible.builtin.template:
+    src: promtail.yml.j2
+    dest: /etc/promtail/config.yml
+    mode: "0600"
+    owner: promtail
+    group: promtail
+  notify: Restart promtail
+  become: true
+
+- name: Create a state directory for promtail
+  ansible.builtin.file:
+    path: /var/lib/promtail
+    state: directory
+    mode: "0700"
+    owner: promtail
+    group: promtail
+  become: true
+
+- name: Add rsyslog config for promtail
+  ansible.builtin.copy:
+    src: promtail.rsyslog.conf
+    dest: /etc/rsyslog.d/20-promtail.conf
+    mode: "0644"
+  notify: Restart rsyslog
+  become: true
+
+- name: Enable promtail
+  ansible.builtin.service:
+    name: promtail.service
+    enabled: true
+  become: true
