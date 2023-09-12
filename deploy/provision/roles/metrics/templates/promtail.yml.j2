@@ -46,6 +46,10 @@ scrape_configs:
           __path__: /var/lib/ut2004/UserLogs/*/AntiTCC_*.log
     pipeline_stages:
       - regex:
+          source: filename
+          expression: '/var/lib/ut2004/UserLogs/(?P<instance>[^/]+)/.*'
+
+      - regex:
           expression: '^\[(?P<timestamp>.*?)\] - \[(?P<action>.*?)\].*? (?P<name>[^ ]+) \[ (?P<guid>[^ ]+) \] IP: (?P<ip>[^ ]+)'
 
       - timestamp:
@@ -54,6 +58,7 @@ scrape_configs:
 
       - labels:
           timestamp:
+          server_instance: instance
           antitcc_action: action
           antitcc_player_name: name
           antitcc_player_guid: guid
