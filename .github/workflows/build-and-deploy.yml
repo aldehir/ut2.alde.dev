@@ -47,7 +47,7 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: [build-server-image, build-config-image]
+    needs: [build-server-image, build-config-image, build-tam-config-image]
     uses: ./.github/workflows/deploy.yml
     with:
       environment: ${{ inputs.environment || 'staging' }}
