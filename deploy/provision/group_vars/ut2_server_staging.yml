@@ -20,6 +20,7 @@ server_instances:
   - id: 3
     port: 7817
     admin_port: 8002
+    config_image: ghcr.io/aldehir/ut2/tam-only-config:main-staging
     info:
       name: UTComp Duels [{{ inventory_hostname }}/3]
       admin: "kokuei <hello@kokuei.dev>"

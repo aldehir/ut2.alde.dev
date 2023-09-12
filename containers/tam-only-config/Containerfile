@@ -1,0 +1,26 @@
+FROM docker.io/library/rockylinux:8
+
+ARG UT2U_VERSION=v0.1.4
+
+WORKDIR /opt/ut2004-config
+
+COPY --chmod=755 entrypoint.sh ./
+COPY --chmod=755 install-packages.sh ./
+COPY packages.csv ./
+Copy UT2004.ini ./
+COPY launch.yml ./
+
+RUN curl -sfL -o /usr/bin/ut2u https://github.com/aldehir/ut2u/releases/download/$UT2U_VERSION/ut2u-linux-amd64 && \
+    chmod +x /usr/bin/ut2u && \
+    ./install-packages.sh && \
+    mkdir /output
+
+VOLUME ["/output"]
+
+LABEL org.opencontainers.image.created="2023-09-01T12:00:00Z" \
+      org.opencontainers.image.authors="Alde Rojas" \
+      org.opencontainers.image.title="UT2004 Dedicated Server - TAM/UTComp Configuration" \
+      org.opencontainers.image.description="UT2004 Dedicated Server - TAM/UTComp Configuration" \
+      org.opencontainers.image.source="https://github.com/aldehir/ut2.kokuei.dev"
+
+ENTRYPOINT ["/opt/ut2004-config/entrypoint.sh"]

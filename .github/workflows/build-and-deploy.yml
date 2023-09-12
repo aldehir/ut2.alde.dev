@@ -35,6 +35,16 @@ jobs:
       environment: ${{ inputs.environment || 'staging' }}
       image-name: tam-utcomp-config
 
+  build-tam-config-image:
+    name: Build TAM-only Config Image
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/build-container.yml
+    with:
+      environment: ${{ inputs.environment || 'staging' }}
+      image-name: tam-only-config
+
   deploy:
     name: Deploy
     needs: [build-server-image, build-config-image]
