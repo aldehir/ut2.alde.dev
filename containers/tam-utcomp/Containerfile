@@ -1,8 +1,13 @@
-# Build the launcher first
+# Build the launcher and preload binraries first
 FROM docker.io/library/golang:1.21
-COPY launcher /src
-WORKDIR /src
+COPY launcher /src/launcher
+COPY preload /src/preload
+
+WORKDIR /src/launcher
 RUN CGO_ENABLE=0 go build -o /usr/bin/launcher .
+
+WORKDIR /src/preload
+RUN CGO_ENABLE=0 go build -o /usr/bin/preload .
 
 # UT2004 container
 FROM ghcr.io/aldehir/ut2/base:3369.3-release-2
@@ -19,14 +24,17 @@ ARG UT2U_VERSION=v0.1.4
 ENV UT2_SERVER_NAME="UT2004 Server" \
     UT2_SERVER_ADMIN="" \
     UT2_SERVER_MOTD="" \
-    UCC=/opt/ut2004/System/ucc-bin-linux-amd64
+    UCC=/opt/ut2004/System/ucc-bin
 
 COPY --from=0 /usr/bin/launcher /usr/bin/launcher
+COPY --from=0 /usr/bin/preload /usr/bin/preload
 COPY --chmod=755 entrypoint.sh ./entrypoint.sh
+COPY UT2004.ini System/UT2004.ini
 
 RUN curl -sfL -o /usr/bin/ut2u https://github.com/aldehir/ut2u/releases/download/$UT2U_VERSION/ut2u-linux-amd64 && \
     chmod +x /usr/bin/ut2u && \
-    mkdir Config
+    mkdir Config && \
+    /usr/bin/preload
 
 LABEL org.opencontainers.image.created="2023-09-01T12:00:00Z" \
       org.opencontainers.image.authors="Alde Rojas" \
