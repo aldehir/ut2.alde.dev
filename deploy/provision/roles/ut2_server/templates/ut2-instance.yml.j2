@@ -49,11 +49,11 @@ spec:
     - name: shared
       hostPath:
         path: /var/lib/ut2004/Config
-        type: DirectoryOrCreate
+        type: Directory
     - name: shared-user-logs
       hostPath:
         path: /var/lib/ut2004/UserLogs/{{ ut2_server_instance_name }}
-        type: Directory
+        type: DirectoryOrCreate
     - name: {{ ut2_server_instance_name }}-config
       emptyDir:
         sizeLimit: 500Mi
