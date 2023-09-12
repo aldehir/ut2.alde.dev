@@ -117,8 +117,9 @@
   become: true
 
 - name: Install promtail
-  ansible.builtin.package:
+  ansible.builtin.dnf:
     name: "{{ metrics_promtail_rpm }}"
+    disable_gpg_check: true
     state: present
   become: true
 
