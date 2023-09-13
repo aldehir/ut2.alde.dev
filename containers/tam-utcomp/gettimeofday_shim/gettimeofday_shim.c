@@ -6,8 +6,11 @@
 void *libc;
 int (*__gettimeofday)(struct timeval * restrict tv, void * restrict tz);
 
+static void load_original();
+
 void __attribute__((constructor)) gettimeofday_init(void) {
   puts("Initializing gettimeofday");
+  load_original();
 }
 
 void __attribute__((destructor)) gettimeofday_deinit(void) {
