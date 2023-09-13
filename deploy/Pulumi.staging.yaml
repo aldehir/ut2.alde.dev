@@ -11,7 +11,7 @@ config:
       regions:
         - id: us-ord
           instances:
-            - g6-dedicated-2
+            - g6-standard-1
           name: chi
   ut2004:domain: staging.kokuei.dev
   ut2004:environment: staging
