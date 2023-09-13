@@ -9,6 +9,14 @@ RUN CGO_ENABLE=0 go build -o /usr/bin/launcher .
 WORKDIR /src/preload
 RUN CGO_ENABLE=0 go build -o /usr/bin/preload .
 
+
+# Build gettimeofday
+FROM docker.io/library/rockylinux:8
+COPY gettimeofday_shim /src
+RUN dnf install -y gcc make glibc.i686 glibc-devel.i686 libgcc.i686
+RUN make -C /src
+
+
 # UT2004 container
 FROM ghcr.io/aldehir/ut2/base:3369.3-release-2
 
@@ -28,6 +36,7 @@ ENV UT2_SERVER_NAME="UT2004 Server" \
 
 COPY --from=0 /usr/bin/launcher /usr/bin/launcher
 COPY --from=0 /usr/bin/preload /usr/bin/preload
+COPY --from=1 /src/libgettimeofday_shim.so /usr/lib/libgettimeofday_shim.so
 COPY --chmod=755 entrypoint.sh ./entrypoint.sh
 COPY UT2004.ini System/UT2004.ini
 

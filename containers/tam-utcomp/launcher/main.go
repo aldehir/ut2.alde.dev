@@ -17,12 +17,14 @@ var serverIniFile string
 var uccPath = "/opt/ut2004/System/ucc-bin"
 var uccExe string
 var systemDir string
+var disableShims bool
 
 var defaultMap = "DM-Antalus.ut2"
 
 func init() {
 	flag.StringVar(&launchConfigFile, "launch", "launch.yml", "launch config")
 	flag.StringVar(&serverIniFile, "ini", "/opt/ut2004/System/UT2004.ini", "UT2004 server ini")
+	flag.BoolVar(&disableShims, "noshims", false, "disable shims")
 }
 
 func main() {
@@ -85,7 +87,12 @@ func main() {
 		panic(err)
 	}
 
-	err = unix.Exec(cmd, args, nil)
+	env := os.Environ()
+	if !disableShims {
+		env = append(env, "LD_PRELOAD=/usr/lib/libgettimeofday_shim.so")
+	}
+
+	err = unix.Exec(cmd, args, env)
 	if err != nil {
 		panic(err)
 	}
