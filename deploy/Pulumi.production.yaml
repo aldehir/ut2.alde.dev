@@ -21,6 +21,10 @@ config:
           instances:
             - g6-dedicated-2
           name: nj
+        - id: eu-west
+          instances:
+            - g6-dedicated-2
+          name: uk
   ut2004:domain: kokuei.dev
   ut2004:environment: production
   ut2004:zone_name: kokuei.dev
