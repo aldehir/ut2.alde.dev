@@ -156,6 +156,14 @@
     enabled: true
   become: true
 
+- name: Enable podman socket
+  ansible.builtin.systemd:
+    name: podman.socket
+    state: started
+    enabled: true
+  notify: Restart cadvisor
+  become: true
+
 - name: Install cAdvisor
   ansible.builtin.get_url:
     url: "{{ metrics_cadvisor_url }}"
