@@ -1,4 +1,9 @@
 ---
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become: true
+
 - name: Update CA trust
   ansible.builtin.command: update-ca-trust
   changed_when: true
@@ -25,5 +30,11 @@
 - name: Restart rsyslog
   ansible.builtin.service:
     name: rsyslog.service
+    state: restarted
+  become: true
+
+- name: Restart cadvisor
+  ansible.builtin.service:
+    name: cadvisor.service
     state: restarted
   become: true

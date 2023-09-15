@@ -7,3 +7,6 @@ metrics_promtail_loki_endpoint: https://logs.kokuei.dev/loki/api/v1/push
 metrics_promtail_loki_tenant_id: kokuei.dev
 metrics_promtail_loki_user:
 metrics_promtail_loki_password:
+
+metrics_cadvisor_url: https://cdn.alde.dev/packages/cadvisor/cadvisor-v0.47.0.93-2-linux-amd64
+metrics_cadvisor_checksum: "sha256:ea6b97bc3c90217b9827db53bc225ac1740eb59da59fae108d2b99f3747333ee"

@@ -155,3 +155,38 @@
     name: promtail.service
     enabled: true
   become: true
+
+- name: Install cAdvisor
+  ansible.builtin.get_url:
+    url: "{{ metrics_cadvisor_url }}"
+    dest: /usr/local/bin/cadvisor
+    mode: "0755"
+    checksum: "{{ metrics_cadvisor_checksum }}"
+  notify: Restart cadvisor
+  become: true
+
+- name: Create cadvisor unit file
+  ansible.builtin.copy:
+    content: |
+      [Unit]
+      Description=cadvisor
+      After=network.target
+
+      [Service]
+      ExecStart=/usr/local/bin/cadvisor -disable_root_cgroup_stats
+
+      [Install]
+      WantedBy=multi-user.target
+    dest: /etc/systemd/system/cadvisor.service
+    mode: "0644"
+  notify:
+    - Reload systemd
+    - Restart cadvisor
+  become: true
+
+- name: Enable cadvsior
+  ansible.builtin.service:
+    name: cadvisor.service
+    state: started
+    enabled: true
+  become: true
