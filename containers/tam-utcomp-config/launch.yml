@@ -100,3 +100,25 @@ voting:
         WeaponStay: False
         FriendlyFire: 1.0
         Tickrate: 60
+
+    - id: utcomp-1v1-alpha-testing
+      game: XGame.xDeathMatch
+      name: 6. 1v1 Alpha Testing
+      prefix: DM
+      mutators:
+        - AntiTCC2009r6.MutAntiTCCFinal
+        - iTSFake.iTSFake
+        - WeaponReplacementv2.MutReplace
+        - UTClassic.MutUseLightning
+        - XGame.MutNoAdrenaline
+        - NoDoubleDamage.MutNoDoubleDamage
+        - XWeapons.MutNoSuperWeapon
+        - UTCompv18bKAlpha.MutUTComp
+        - Tickrate.Tickrate
+      options:
+        MaxPlayers: 2
+        MinPlayers: 2
+        GoalScore: 0
+        TimeLimit: 15
+        WeaponStay: False
+        Tickrate: 60
