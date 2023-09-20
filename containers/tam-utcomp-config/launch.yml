@@ -53,15 +53,9 @@ voting:
       mutators:
         - kMods.MutRespawnTimers
 
-    - id: utcomp-1v1-15m-no-netcode
-      name: 3. 1v1 [15m/NetcodeOff]
-      extends: utcomp-1v1-15m-netcode
-      options:
-        EnableEnhancedNetcode: "false"
-
     - id: utcomp-1v1-10m-netcode
       game: XGame.xDeathMatch
-      name: 4. 1v1 [10m]
+      name: 3. 1v1 [10m]
       prefix: DM
       mutators:
         - AntiTCC2009r6.MutAntiTCCFinal
@@ -82,7 +76,7 @@ voting:
         Tickrate: 60
 
     - id: utcomp-1v1-10m-netcode-timers
-      name: 5. 1v1 [10m/20sTimers]
+      name: 4. 1v1 [10m/20sTimers]
       extends: utcomp-1v1-10m-netcode
       mutators:
         - kMods.MutRespawnTimers
