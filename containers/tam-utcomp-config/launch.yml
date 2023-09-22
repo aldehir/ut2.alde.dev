@@ -29,8 +29,14 @@ voting:
         WeaponStay: False
         Tickrate: 60
 
+    - id: utcomp-1v1-10m-netcode
+      extends: utcomp-1v1-15m-netcode
+      name: 2. 1v1 Cup [10m]
+      options:
+        TimeLimit: 10
+
     - id: utcomp-1v1-15m-netcode-limited-specs
       extends: utcomp-1v1-15m-netcode
-      name: 2. 1v1 Cup [Max 2 Spectators]
+      name: 3. 1v1 Cup [Max 2 Spectators]
       options:
         MaxSpectators: 2
