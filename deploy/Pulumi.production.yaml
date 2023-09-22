@@ -12,17 +12,21 @@ config:
         - id: us-central
           instances:
             - g6-dedicated-2
+            - g6-dedicated-2
           name: dfw
         - id: us-ord
           instances:
+            - g6-dedicated-2
             - g6-dedicated-2
           name: chi
         - id: us-east
           instances:
             - g6-dedicated-2
+            - g6-dedicated-2
           name: nj
         - id: eu-west
           instances:
+            - g6-dedicated-2
             - g6-dedicated-2
           name: uk
   ut2004:domain: kokuei.dev
