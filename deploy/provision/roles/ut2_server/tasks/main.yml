@@ -61,8 +61,6 @@
   loop:
     - "{{ ut2_server_game_port }}/udp"
     - "{{ ut2_server_query_port }}/udp"
-    - "{{ ut2_server_gamespy_port }}/udp"
-    - "{{ ut2_server_web_admin_port }}/tcp"
 
 - name: Restart instance
   ansible.builtin.include_tasks: restart.yml

@@ -53,10 +53,6 @@
       ansible.builtin.import_role:
         name: reverse_proxy
 
-    - name: Stop
-      fail:
-        msg: breakpoint
-
     - name: Create directories for shared files
       ansible.builtin.file:
         path: "{{ item }}"

@@ -45,6 +45,9 @@ spec:
           protocol: UDP
         - containerPort: {{ ut2_server_query_port }}
           protocol: UDP
+        - containerPort: 80
+          hostPort: {{ ut2_server_web_admin_port }}
+          name: http-web-admin
   volumes:
     - name: shared
       hostPath:
@@ -74,3 +77,7 @@ spec:
     - protocol: UDP
       port: {{ ut2_server_query_port }}
       targetPort: {{ ut2_server_query_port }}
+
+    - protocol: TCP
+      port: {{ ut2_server_web_admin_port }}
+      targetPort: http-web-admin
