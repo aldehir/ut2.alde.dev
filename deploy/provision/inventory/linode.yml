@@ -5,3 +5,4 @@ keyed_groups:
     separator: ''
 compose:
   ansible_ssh_host: ipv4 | first
+  region: region

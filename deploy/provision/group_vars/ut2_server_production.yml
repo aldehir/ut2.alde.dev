@@ -2,24 +2,32 @@
 server_instance_default_image: ghcr.io/aldehir/ut2/tam-utcomp:main
 server_instance_default_config_image: ghcr.io/aldehir/ut2/tam-utcomp-config:main
 
+server_instance_region_map:
+  us-central: Dallas
+  us-ord: Chicago
+  us-east: New Jersey
+  eu-west: UK
+
+server_instance_label: "k{{ (inventory_hostname | split('.'))[1] | upper }}"
+
 server_instances:
   - id: 1
     port: 7777
     admin_port: 8000
     info:
-      name: UTComp Duels [{{ inventory_hostname }} instance 1]
+      name: UFC Duel Cup {{ server_instance_label }}.1
       admin: "kokuei <hello@kokuei.dev>"
 
   - id: 2
     port: 7797
     admin_port: 8001
     info:
-      name: UTComp Duels [{{ inventory_hostname }} instance 2]
+      name: UFC Duel Cup {{ server_instance_label }}.2
       admin: "kokuei <hello@kokuei.dev>"
 
   - id: 3
     port: 7817
     admin_port: 8002
     info:
-      name: UTComp Duels [{{ inventory_hostname }} instance 3]
+      name: UFC Duel Cup {{ server_instance_label }}.3
       admin: "kokuei <hello@kokuei.dev>"
