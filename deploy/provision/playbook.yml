@@ -45,6 +45,10 @@
         state: present
       become: true
 
+    - name: Set up reverse proxy
+      ansible.builtin.include_role:
+        name: reverse_proxy
+
     - name: Create directories for shared files
       ansible.builtin.file:
         path: "{{ item }}"

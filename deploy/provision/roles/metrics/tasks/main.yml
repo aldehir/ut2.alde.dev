@@ -1,10 +1,4 @@
 ---
-- name: Install nginx
-  ansible.builtin.package:
-    name: nginx
-    state: present
-  become: true
-
 - name: Upload metrics CA
   ansible.builtin.copy:
     content: "{{ metrics_endpoint_ca }}\n"
@@ -32,29 +26,31 @@
     group: nginx
   become: true
 
-- name: Install nginx.conf
+- name: Install metrics nginx config
   ansible.builtin.copy:
-    src: nginx.conf
-    dest: /etc/nginx/nginx.conf
+    src: metrics.nginx.conf
+    dest: /etc/nginx/conf.d/metrics.conf
     mode: "0644"
   notify: Restart nginx
   become: true
 
-- name: Enable https
+- name: Enable metrics port
   ansible.posix.firewalld:
-    service: https
+    port: 8443/tcp
     state: enabled
     zone: public
     immediate: true
     permanent: true
   become: true
 
-- name: Start nginx
-  ansible.builtin.service:
-    name: nginx.service
-    state: started
-    enabled: true
+- name: Add metrics port as http_port_t
+  community.general.seport:
+    ports: 8443
+    proto: tcp
+    setype: http_port_t
+    state: present
   become: true
+  when: ansible_selinux.status == "enabled"
 
 - name: Download the node exporter
   ansible.builtin.get_url:

@@ -1,0 +1,30 @@
+---
+- name: Install nginx
+  ansible.builtin.package:
+    name: nginx
+    state: present
+  become: true
+
+- name: Install nginx.conf
+  ansible.builtin.copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    mode: "0644"
+  notify: Restart nginx
+  become: true
+
+- name: Start nginx
+  ansible.builtin.service:
+    name: nginx.service
+    state: started
+    enabled: true
+  become: true
+
+- name: Enable https
+  ansible.posix.firewalld:
+    service: https
+    state: enabled
+    zone: public
+    immediate: true
+    permanent: true
+  become: true
