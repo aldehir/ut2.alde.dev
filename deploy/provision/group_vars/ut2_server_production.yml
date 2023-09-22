@@ -8,7 +8,7 @@ server_instance_region_map:
   us-east: New Jersey
   eu-west: UK
 
-server_instance_label: "k{{ (inventory_hostname | split('.'))[1] | upper }}"
+server_instance_label: "{{ (inventory_hostname | split('.'))[1] | upper }}"
 
 server_instances:
   - id: 1
