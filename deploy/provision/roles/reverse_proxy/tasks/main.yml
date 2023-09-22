@@ -5,13 +5,78 @@
     state: present
   become: true
 
+- name: Download lego
+  ansible.builtin.get_url:
+    url: https://github.com/go-acme/lego/releases/download/v4.14.2/lego_v4.14.2_linux_amd64.tar.gz
+    dest: /root/lego.tar.gz
+    mode: "0644"
+    checksum: "sha256:f5a978397802a2eb20771925ceb173dff88705b45fdbb2e68312269e205fa85d"
+  become: true
+
+- name: Extract lego
+  ansible.builtin.unarchive:
+    src: /root/lego.tar.gz
+    dest: /usr/local/bin
+    creates: /usr/local/bin/lego
+    include:
+      - lego
+    mode: "0755"
+    remote_src: true
+  become: true
+
 - name: Install nginx.conf
-  ansible.builtin.copy:
-    src: nginx.conf
+  ansible.builtin.template:
+    src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
     mode: "0644"
   notify: Restart nginx
   become: true
+
+- name: Install ssl_params
+  ansible.builtin.copy:
+    src: ssl_params
+    dest: /etc/nginx/ssl_params
+    mode: "0644"
+  notify: Restart nginx
+  become: true
+
+- name: Create /srv/www directory
+  ansible.builtin.file:
+    path: /srv/www
+    state: directory
+    owner: nginx
+    group: nginx
+    mode: "0755"
+  become: true
+
+- name: Create /srv/acme directory
+  ansible.builtin.file:
+    path: /srv/acme
+    state: directory
+    owner: nginx
+    group: nginx
+    mode: "0755"
+  become: true
+
+- name: Install cert script
+  ansible.builtin.copy:
+    src: install-cert
+    dest: /usr/local/bin/install-cert
+    mode: "0755"
+  become: true
+
+- name: Enable http/https
+  ansible.posix.firewalld:
+    service: "{{ item }}"
+    state: enabled
+    zone: public
+    immediate: true
+    permanent: true
+  loop: [http, https]
+  become: true
+
+- name: Restart nginx if necessary
+  ansible.builtin.meta: flush_handlers
 
 - name: Start nginx
   ansible.builtin.service:
@@ -20,11 +85,69 @@
     enabled: true
   become: true
 
-- name: Enable https
-  ansible.posix.firewalld:
-    service: https
-    state: enabled
-    zone: public
-    immediate: true
-    permanent: true
+- name: Set up let's encrypt account
+  block:
+    - name: Create directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0700"
+      loop:
+        - /var/lib/lego
+        - /var/lib/lego/accounts
+        - /var/lib/lego/accounts/{{ letsencrypt.url }}
+        - /var/lib/lego/accounts/{{ letsencrypt.url }}/{{ letsencrypt.account.email }}
+        - /var/lib/lego/accounts/{{ letsencrypt.url }}/{{ letsencrypt.account.email }}/keys
+      become: true
+
+    - name: Generate account.json
+      ansible.builtin.copy:
+        content: "{{ letsencrypt.account | to_nice_json }}\n"
+        dest: /var/lib/lego/accounts/{{ letsencrypt.url }}/{{ letsencrypt.account.email }}/account.json
+        mode: "0600"
+      become: true
+
+    - name: Copy account key
+      ansible.builtin.copy:
+        content: "{{ letsencrypt.key }}\n"
+        dest: /var/lib/lego/accounts/{{ letsencrypt.url }}/{{ letsencrypt.account.email }}/keys/{{ letsencrypt.account.email }}.key
+        mode: "0600"
+      become: true
+
+- name: Issue certificate
+  ansible.builtin.command:
+    argv:
+      - /usr/local/bin/lego
+      - --path=/var/lib/lego
+      - --accept-tos
+      - --email={{ letsencrypt.account.email }}
+      - --domains={{ inventory_hostname }}
+      - --domains={{ inventory_hostname | replace('ut2.', '') }}
+      - --http
+      - --http.webroot=/srv/acme
+      - run
+      - --run-hook=/usr/local/bin/install-cert
+    creates: /etc/pki/tls/certs/server.crt
+  become: true
+
+- name: Install renewal service
+  ansible.builtin.template:
+    src: cert-renew.service.j2
+    dest: /etc/systemd/system/cert-renew.service
+    mode: "0644"
+  become: true
+
+- name: Install renewal timer
+  ansible.builtin.copy:
+    src: cert-renew.timer
+    dest: /etc/systemd/system/cert-renew.timer
+    mode: "0644"
+  become: true
+
+- name: Reload systemd and enable renewal timer
+  ansible.builtin.systemd:
+    name: cert-renew.timer
+    state: started
+    enabled: true
+    daemon_reload: true
   become: true

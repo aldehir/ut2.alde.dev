@@ -1,0 +1,7 @@
+[Unit]
+Description=Certificate Renewal
+Requires=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/lego --path=/var/lib/lego --accept-tos --email={{ letsencrypt.account.email }} --domains={{ inventory_hostname }} --domains={{ inventory_hostname | replace('ut2.', '') }} --http --http.webroot=/srv/acme renew --renew-hook=/usr/local/bin/install-cert

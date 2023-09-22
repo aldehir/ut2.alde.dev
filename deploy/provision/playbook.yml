@@ -3,6 +3,10 @@
   strategy: ansible.builtin.free
   hosts: ut2_server
 
+  vars_files:
+    - acls.yml
+    - certs.yml
+
   tasks:
     - name: Set hostname to inventory_hostname (without the ut2.)
       ansible.builtin.hostname:
@@ -46,8 +50,12 @@
       become: true
 
     - name: Set up reverse proxy
-      ansible.builtin.include_role:
+      ansible.builtin.import_role:
         name: reverse_proxy
+
+    - name: Stop
+      fail:
+        msg: breakpoint
 
     - name: Create directories for shared files
       ansible.builtin.file:

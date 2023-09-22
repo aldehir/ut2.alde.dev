@@ -1,0 +1,10 @@
+[Unit]
+Description=Certificate Renewal
+
+[Timer]
+Persistent=true
+OnCalendar=*-*-* 5:38
+RandomizeDelaySec=1h
+
+[Install]
+WantedBy=timers.target
