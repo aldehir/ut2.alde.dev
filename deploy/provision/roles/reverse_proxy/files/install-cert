@@ -10,4 +10,4 @@ EOF
 chown nginx:nginx /etc/nginx/default.d/ssl.conf
 chmod 644 /etc/nginx/default.d/ssl.conf
 
-systemctl reload nginx@service
+systemctl reload nginx.service
