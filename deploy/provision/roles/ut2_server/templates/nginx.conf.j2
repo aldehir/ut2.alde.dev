@@ -1,11 +1,11 @@
-location /{{ ut2_server_instance_name }}/images/ {
+location {{ ut2_server_public_path }}/images/ {
     proxy_pass http://127.0.0.1:{{ ut2_server_web_admin_port }}/images/;
 }
 
-location /{{ ut2_server_instance_name }}/ {
+location {{ ut2_server_public_path }}/ {
     proxy_set_header Accept-Encoding "";
     proxy_pass http://127.0.0.1:{{ ut2_server_web_admin_port }}/ServerAdmin/;
 
-    sub_filter "/images" "/{{ ut2_server_instance_name }}/images";
+    sub_filter "/images" "{{ ut2_server_public_path }}/images";
     sub_filter_once off;
 }

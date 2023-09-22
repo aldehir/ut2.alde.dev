@@ -3,3 +3,5 @@ ut2_server_instance_name: ut2-instance-{{ "%02d" | format(ut2_server_id | int) }
 # These ports are derived from the game port
 ut2_server_query_port: "{{ (ut2_server_game_port | int) + 1 }}"
 ut2_server_gamespy_port: "{{ (ut2_server_game_port | int) + 10 }}"
+
+ut2_server_public_path: "/instance/{{ ut2_server_id }}"
