@@ -29,6 +29,10 @@ config:
             - g6-dedicated-2
             - g6-dedicated-2
           name: uk
+        - id: eu-central
+          instances:
+            - g6-dedicated-2
+          name: de
   ut2004:domain: kokuei.dev
   ut2004:environment: production
   ut2004:zone_name: kokuei.dev
