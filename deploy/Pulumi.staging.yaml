@@ -10,8 +10,7 @@ config:
       base: private/21473290
       regions:
         - id: us-ord
-          instances:
-            - g6-standard-1
+          instances: []
           name: chi
   ut2004:domain: staging.kokuei.dev
   ut2004:environment: staging

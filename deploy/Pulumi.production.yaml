@@ -10,23 +10,19 @@ config:
       base: private/21473290
       regions:
         - id: us-central
-          instances:
-            - g6-dedicated-2
+          instances: []
           name: dfw
         - id: us-ord
           instances: []
           name: chi
         - id: us-east
-          instances:
-            - g6-dedicated-2
+          instances: []
           name: nj
         - id: eu-west
-          instances:
-            - g6-dedicated-2
+          instances: []
           name: uk
         - id: eu-central
-          instances:
-            - g6-dedicated-2
+          instances: []
           name: de
   ut2004:domain: kokuei.dev
   ut2004:environment: production
