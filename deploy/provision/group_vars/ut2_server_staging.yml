@@ -4,25 +4,27 @@ server_instance_default_config_image: ghcr.io/aldehir/ut2/tam-utcomp-config:main
 
 server_instance_label: "{{ (inventory_hostname | split('.'))[1] | upper }}"
 
-server_instances:
-  - id: 1
-    port: 7777
-    admin_port: 8000
-    info:
-      name: UFC Duel Cup TEST SERVER {{ server_instance_label }}.1
-      admin: "kokuei <hello@kokuei.dev>"
+server_instances: []
 
-  - id: 2
-    port: 7797
-    admin_port: 8001
-    info:
-      name: UFC Duel Cup TEST SERVER {{ server_instance_label }}.2
-      admin: "kokuei <hello@kokuei.dev>"
-
-  - id: 3
-    port: 7817
-    admin_port: 8002
-    config_image: ghcr.io/aldehir/ut2/tam-only-config:main-staging
-    info:
-      name: UFC Duel Cup TEST SERVER {{ server_instance_label }}.3
-      admin: "kokuei <hello@kokuei.dev>"
+# server_instances:
+#   - id: 1
+#     port: 7777
+#     admin_port: 8000
+#     info:
+#       name: UFC Duel Cup TEST SERVER {{ server_instance_label }}.1
+#       admin: "kokuei <hello@kokuei.dev>"
+# 
+#   - id: 2
+#     port: 7797
+#     admin_port: 8001
+#     info:
+#       name: UFC Duel Cup TEST SERVER {{ server_instance_label }}.2
+#       admin: "kokuei <hello@kokuei.dev>"
+# 
+#   - id: 3
+#     port: 7817
+#     admin_port: 8002
+#     config_image: ghcr.io/aldehir/ut2/tam-only-config:main-staging
+#     info:
+#       name: UFC Duel Cup TEST SERVER {{ server_instance_label }}.3
+#       admin: "kokuei <hello@kokuei.dev>"
