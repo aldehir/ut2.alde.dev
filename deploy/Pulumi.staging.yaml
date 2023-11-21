@@ -10,7 +10,8 @@ config:
       base: private/21473290
       regions:
         - id: us-ord
-          instances: []
+          instances:
+            - g6-nanode-1
           name: chi
         - id: us-east
           instances:
